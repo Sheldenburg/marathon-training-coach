@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             if (ok) {
                 updateStatus("✅ Google Drive connected!\n\nNow tap 'Grant Health Connect Access'.")
             } else {
-                updateStatus("❌ Failed — the code may have expired (they last ~10 min). Tap Connect Drive to try again.")
+                updateStatus("❌ Failed: ${uploader.lastError}\n\nTap Connect Drive to try again.")
             }
             updateUi()
         }

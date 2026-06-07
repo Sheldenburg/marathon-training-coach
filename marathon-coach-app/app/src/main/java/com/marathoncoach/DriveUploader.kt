@@ -35,6 +35,8 @@ class DriveUploader(private val context: Context) {
     val isAuthorized: Boolean
         get() = prefs.getString(KEY_REFRESH_TOKEN, null) != null
 
+    var lastError: String = ""
+
     /** Build the URL the app opens in a browser so the user can authorize. */
     fun buildAuthUrl(): String {
         return "https://accounts.google.com/o/oauth2/v2/auth" +
@@ -66,7 +68,14 @@ class DriveUploader(private val context: Context) {
 
         return try {
             val response = http.newCall(request).execute()
-            val json = JSONObject(response.body!!.string())
+            val bodyStr = response.body!!.string()
+            Log.d(TAG, "Token exchange response (${response.code}): $bodyStr")
+            val json = JSONObject(bodyStr)
+            if (json.has("error")) {
+                Log.e(TAG, "Token exchange error: ${json.optString("error")} — ${json.optString("error_description")}")
+                lastError = "${json.optString("error")}: ${json.optString("error_description")}"
+                return false
+            }
             prefs.edit()
                 .putString(KEY_REFRESH_TOKEN, json.getString("refresh_token"))
                 .putString(KEY_ACCESS_TOKEN, json.getString("access_token"))
@@ -75,6 +84,7 @@ class DriveUploader(private val context: Context) {
             true
         } catch (e: Exception) {
             Log.e(TAG, "Token exchange failed", e)
+            lastError = e.message ?: "Unknown error"
             false
         }
     }
