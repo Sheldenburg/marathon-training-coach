@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.health.connect.client.HealthConnectClient
+import androidx.health.connect.client.PermissionController
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     // Health Connect permission launcher
     private val requestHealthPermissions =
         registerForActivityResult(
-            HealthConnectClient.requestHealthPermissionsResultContract()
+            PermissionController.createRequestPermissionResultContract()
         ) { granted ->
             if (granted.containsAll(HealthConnectReader.PERMISSIONS)) {
                 updateStatus("✅ Health Connect connected! You're all set — syncing every 6 hours.")
