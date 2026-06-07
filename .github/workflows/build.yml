@@ -26,6 +26,14 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.7'
+
+      - name: Generate Gradle wrapper
+        run: gradle wrapper --gradle-version 8.7
+
       - name: Decode keystore from secret
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/coach.keystore
@@ -34,9 +42,6 @@ jobs:
         run: |
           echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> gradle.properties
           echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> gradle.properties
-
-      - name: Make Gradle wrapper executable
-        run: chmod +x ./gradlew
 
       - name: Build release APK
         run: ./gradlew assembleRelease
