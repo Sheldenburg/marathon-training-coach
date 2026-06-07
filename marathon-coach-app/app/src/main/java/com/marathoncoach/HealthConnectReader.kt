@@ -326,7 +326,7 @@ class HealthConnectReader(private val context: Context) {
         ExerciseSessionRecord.EXERCISE_TYPE_RUNNING_TREADMILL -> "treadmill_run"
         ExerciseSessionRecord.EXERCISE_TYPE_WALKING -> "walk"
         ExerciseSessionRecord.EXERCISE_TYPE_HIKING -> "hike"
-        ExerciseSessionRecord.EXERCISE_TYPE_CYCLING -> "cycling"
+        ExerciseSessionRecord.EXERCISE_TYPE_BIKING -> "cycling"
         ExerciseSessionRecord.EXERCISE_TYPE_SWIMMING_OPEN_WATER -> "swim_open_water"
         ExerciseSessionRecord.EXERCISE_TYPE_SWIMMING_POOL -> "swim_pool"
         ExerciseSessionRecord.EXERCISE_TYPE_STRENGTH_TRAINING -> "strength"
