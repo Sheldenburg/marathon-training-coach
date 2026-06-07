@@ -354,9 +354,8 @@ class DriveUploader(private val context: Context) {
     companion object {
         private const val TAG = "DriveUploader"
         private const val FOLDER_NAME = BuildConfig.DRIVE_FOLDER_NAME
-        // Desktop app OAuth uses localhost — no custom scheme needed, no console config needed
-        const val REDIRECT_PORT = 8765
-        private const val REDIRECT_URI = "http://127.0.0.1:$REDIRECT_PORT"
+        // GitHub Pages page that shows the auth code to the user (no localhost server needed)
+        const val REDIRECT_URI = "https://sheldenburg.github.io/marathon-training-coach/"
 
         // SharedPreferences keys
         private const val KEY_REFRESH_TOKEN = "refresh_token"

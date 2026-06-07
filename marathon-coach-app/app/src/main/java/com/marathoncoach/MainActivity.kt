@@ -3,48 +3,42 @@ package com.marathoncoach
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.browser.customtabs.CustomTabsIntent
-import android.util.Log
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.health.connect.client.HealthConnectClient
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.health.connect.client.PermissionController
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.PrintWriter
-import java.net.ServerSocket
 
 /**
- * One-screen setup app. After the user grants Health Connect + Google Drive
- * permissions on first launch, this screen is rarely needed — the background
- * SyncWorker handles everything automatically.
+ * One-screen setup app. After permissions are granted this screen is rarely needed —
+ * SyncWorker handles everything in the background.
  *
- * OAuth flow (Desktop app / localhost redirect):
- *   1. App starts a local HTTP server on port 8765.
- *   2. Opens browser → user signs in and authorizes.
- *   3. Google redirects to http://127.0.0.1:8765?code=...
- *   4. Local server catches the code → exchanges for tokens → server shuts down.
+ * OAuth flow (GitHub Pages redirect):
+ *   1. App opens browser → user signs in and approves.
+ *   2. Google redirects to the GitHub Pages callback page.
+ *   3. That page shows the auth code prominently with a Copy button.
+ *   4. User copies the code, switches back to app, pastes it, taps Connect.
+ *   5. App exchanges the code for tokens and stores the refresh token.
+ *
+ * Why not localhost? Chrome on Android blocks HTTP redirects from HTTPS pages.
+ * Why not custom URI scheme? Requires SHA-1 + Android credential type in Google Cloud.
+ * GitHub Pages redirect is reliable, requires no infrastructure, works every time.
  */
 class MainActivity : AppCompatActivity() {
 
     private val uploader by lazy { DriveUploader(this) }
-    private var localServer: ServerSocket? = null
 
-    // Health Connect permission launcher
     private val requestHealthPermissions =
         registerForActivityResult(
             PermissionController.createRequestPermissionResultContract()
         ) { granted ->
             if (granted.containsAll(HealthConnectReader.PERMISSIONS)) {
-                updateStatus("✅ Health Connect connected! You're all set — syncing every 6 hours.")
+                updateStatus("✅ All set! Syncing every 6 hours automatically.")
                 SyncWorker.schedule(this)
             } else {
-                updateStatus("⚠️ Some Health Connect permissions were denied.\nPlease grant Exercise, Distance, Heart Rate, and Speed.")
+                updateStatus("⚠️ Some Health Connect permissions were denied.\nPlease grant all permissions for full data sync.")
             }
             updateUi()
         }
@@ -54,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         findViewById<Button>(R.id.btnConnectDrive).setOnClickListener {
-            startOAuthFlow()
+            openBrowserForAuth()
         }
 
         findViewById<Button>(R.id.btnGrantHealth).setOnClickListener {
@@ -69,105 +63,63 @@ class MainActivity : AppCompatActivity() {
         updateUi()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        localServer?.close()  // clean up if user leaves mid-auth
-    }
-
     // -------------------------------------------------------------------------
     // OAuth flow
     // -------------------------------------------------------------------------
 
-    private fun startOAuthFlow() {
-        updateStatus("⏳ Starting authorization…")
+    private fun openBrowserForAuth() {
+        updateStatus("Opening Google authorization…")
 
-        lifecycleScope.launch {
-            // 1. Start the local server BEFORE opening the browser, so it's ready to catch the redirect
-            val code = withContext(Dispatchers.IO) { startLocalServerAndWait() }
+        // Open the consent page. After approval, Google redirects to the GitHub Pages
+        // callback URL which shows the auth code for the user to copy.
+        val url = uploader.buildAuthUrl()
+        CustomTabsIntent.Builder()
+            .setShowTitle(true)
+            .build()
+            .launchUrl(this, Uri.parse(url))
 
-            if (code == null) {
-                updateStatus("❌ Authorization timed out or was cancelled. Try again.")
-                updateUi()
-                return@launch
+        // After user comes back, show the paste dialog
+        showCodePasteDialog()
+    }
+
+    private fun showCodePasteDialog() {
+        val input = EditText(this).apply {
+            hint = "Paste authorization code here"
+            setPadding(48, 32, 48, 32)
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Paste Authorization Code")
+            .setMessage(
+                "After approving in the browser:\n\n" +
+                "1. The page will show an authorization code\n" +
+                "2. Tap "Copy Code" on that page\n" +
+                "3. Come back here and paste it below"
+            )
+            .setView(input)
+            .setPositiveButton("Connect") { _, _ ->
+                val code = input.text.toString().trim()
+                if (code.isNotEmpty()) {
+                    exchangeCode(code)
+                } else {
+                    updateStatus("❌ No code entered. Tap Connect Drive to try again.")
+                }
             }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
 
-            // 2. Exchange the code for tokens
-            updateStatus("⏳ Connecting to Google Drive…")
+    private fun exchangeCode(code: String) {
+        updateStatus("⏳ Connecting to Google Drive…")
+        lifecycleScope.launch {
             val ok = uploader.exchangeCodeForTokens(code)
-
             if (ok) {
                 updateStatus("✅ Google Drive connected!\n\nNow tap 'Grant Health Connect Access'.")
             } else {
-                updateStatus("❌ Failed to connect Google Drive. Check your Client ID/Secret and try again.")
+                updateStatus("❌ Failed — the code may have expired (they last ~10 min). Tap Connect Drive to try again.")
             }
             updateUi()
         }
-
-        // 3. Open Chrome Custom Tabs slightly after launching the coroutine.
-        //    Custom Tabs keep this Activity in the foreground (unlike a full external browser),
-        //    so the local server coroutine stays alive when Google redirects to localhost:8765.
-        android.os.Handler(mainLooper).postDelayed({
-            val url = uploader.buildAuthUrl()
-            CustomTabsIntent.Builder()
-                .setShowTitle(true)
-                .build()
-                .launchUrl(this, Uri.parse(url))
-        }, 300)
-    }
-
-    /**
-     * Spins up a local HTTP server on port 8765, waits for Google's redirect,
-     * extracts the auth code from the URL, sends a success page, and returns the code.
-     *
-     * Runs on a background thread (Dispatchers.IO). Times out after 5 minutes.
-     */
-    private fun startLocalServerAndWait(): String? {
-        return try {
-            val server = ServerSocket(DriveUploader.REDIRECT_PORT).also { localServer = it }
-            server.soTimeout = 5 * 60 * 1000  // 5 minute timeout
-
-            Log.d(TAG, "Local OAuth server listening on port ${DriveUploader.REDIRECT_PORT}")
-
-            val socket = server.accept()  // blocks until browser hits localhost:8765
-            val reader = BufferedReader(InputStreamReader(socket.getInputStream()))
-            val requestLine = reader.readLine() ?: return null
-
-            // requestLine looks like: GET /?code=4/ABC...&scope=... HTTP/1.1
-            val code = extractCode(requestLine)
-
-            // Send a nice response page so the browser doesn't show an error
-            val responseBody = if (code != null) {
-                "<html><body><h2>✅ Marathon Coach connected!</h2><p>You can close this tab and return to the app.</p></body></html>"
-            } else {
-                "<html><body><h2>❌ Authorization failed.</h2><p>Return to the app and try again.</p></body></html>"
-            }
-            val response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nConnection: close\r\n\r\n$responseBody"
-            PrintWriter(socket.getOutputStream()).use { it.print(response) }
-
-            socket.close()
-            server.close()
-            localServer = null
-
-            code
-        } catch (e: Exception) {
-            Log.e(TAG, "Local server error", e)
-            null
-        }
-    }
-
-    /** Parses `code=XYZ` from the GET request line */
-    private fun extractCode(requestLine: String): String? {
-        // e.g. "GET /?code=4%2FABCD&scope=... HTTP/1.1"
-        val queryStart = requestLine.indexOf('?')
-        val queryEnd = requestLine.lastIndexOf(' ')
-        if (queryStart < 0 || queryEnd < 0) return null
-
-        val query = requestLine.substring(queryStart + 1, queryEnd)
-        return query.split('&')
-            .map { it.split('=') }
-            .firstOrNull { it.size == 2 && it[0] == "code" }
-            ?.get(1)
-            ?.let { java.net.URLDecoder.decode(it, "UTF-8") }
     }
 
     // -------------------------------------------------------------------------
@@ -185,13 +137,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateStatus(msg: String) {
-        Log.d(TAG, msg)
         runOnUiThread {
             findViewById<TextView>(R.id.tvStatus).text = msg
         }
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
     }
 }

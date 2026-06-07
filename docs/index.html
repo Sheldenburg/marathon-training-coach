@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marathon Coach — Connect Google Drive</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px 24px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        .icon { font-size: 48px; margin-bottom: 16px; }
+        h1 { font-size: 22px; color: #1a1a1a; margin-bottom: 8px; }
+        .subtitle { color: #666; font-size: 15px; margin-bottom: 24px; line-height: 1.5; }
+        .code-label { font-size: 13px; color: #888; text-transform: uppercase;
+                      letter-spacing: 0.5px; margin-bottom: 8px; }
+        .code-box {
+            background: #f0f0f0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 16px;
+            font-family: "SF Mono", "Courier New", monospace;
+            font-size: 13px;
+            word-break: break-all;
+            line-height: 1.6;
+            color: #222;
+            margin-bottom: 16px;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .code-box:active { border-color: #E64A19; }
+        .copy-btn {
+            background: #E64A19;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .copy-btn:active { background: #BF360C; }
+        .copied-msg {
+            display: none;
+            color: #2e7d32;
+            font-weight: 600;
+            margin-top: 12px;
+            font-size: 15px;
+        }
+        .step {
+            background: #FFF3E0;
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            text-align: left;
+        }
+        .step strong { color: #E64A19; }
+        .error-card h1 { color: #c62828; }
+    </style>
+</head>
+<body>
+<div class="card" id="card">
+    <div id="content">
+        <div class="icon">⏳</div>
+        <h1>Loading…</h1>
+    </div>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const code  = params.get('code');
+    const error = params.get('error');
+    const content = document.getElementById('content');
+
+    if (error) {
+        content.innerHTML = `
+            <div class="icon">❌</div>
+            <h1>Authorization failed</h1>
+            <p class="subtitle">Error: <strong>${error}</strong><br>Close this tab and try again in the app.</p>
+        `;
+    } else if (code) {
+        content.innerHTML = `
+            <div class="icon">🏃</div>
+            <h1>Almost there!</h1>
+            <p class="subtitle">Copy this code and paste it into the <strong>Marathon Coach</strong> app.</p>
+            <div class="code-label">Your authorization code</div>
+            <div class="code-box" id="codeBox" onclick="copyCode()">${code}</div>
+            <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+            <div class="copied-msg" id="copiedMsg">✅ Copied! Switch back to the app and paste it.</div>
+            <div class="step">
+                <strong>Next:</strong> Switch back to the Marathon Coach app →
+                paste this code into the box → tap <strong>Connect</strong>.
+            </div>
+        `;
+    } else {
+        content.innerHTML = `
+            <div class="icon">🏃</div>
+            <h1>Marathon Coach</h1>
+            <p class="subtitle">This page is used during Google Drive authorization.<br>
+            Open the Marathon Coach app and tap "Connect Google Drive" to begin.</p>
+        `;
+    }
+
+    function copyCode() {
+        const code = document.getElementById('codeBox').innerText.trim();
+        navigator.clipboard.writeText(code).then(() => {
+            document.getElementById('copiedMsg').style.display = 'block';
+            document.querySelector('.copy-btn').textContent = '✅ Copied!';
+        }).catch(() => {
+            // Fallback: select the text
+            const range = document.createRange();
+            range.selectNode(document.getElementById('codeBox'));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        });
+    }
+</script>
+</body>
+</html>
