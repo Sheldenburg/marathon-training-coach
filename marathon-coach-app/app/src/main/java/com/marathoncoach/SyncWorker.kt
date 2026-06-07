@@ -2,60 +2,62 @@ package com.marathoncoach
 
 import android.content.Context
 import android.util.Log
-import androidx.work.Constraints
-import androidx.work.CoroutineWorker
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.WorkerParameters
+import androidx.work.*
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 
 /**
- * Background job that:
- *   1. Reads any new runs from Health Connect (last 7 days to catch anything missed).
- *   2. Uploads each run as a dated JSON file to Google Drive.
+ * Background job that syncs all health data to Google Drive every 6 hours.
  *
- * Scheduled to run every 6 hours when there's an internet connection.
- * WorkManager respects Doze mode — on Samsung, you should also set
- * battery optimization to "Unrestricted" for this app.
+ * Folder layout in Drive:
+ *   RunningCoach/
+ *   ├── activities/   ← one JSON per exercise session (all types)
+ *   └── daily/        ← one JSON per calendar day (steps, sleep, weight, vitals…)
  */
 class SyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
     private val reader = HealthConnectReader(context)
     private val uploader = DriveUploader(context)
-    private val fileDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm")
+    private val timeFmt = DateTimeFormatter.ofPattern("HH-mm-ss")
+    private val zone = ZoneId.systemDefault()
 
     override suspend fun doWork(): Result {
         Log.d(TAG, "SyncWorker started")
 
         if (!uploader.isAuthorized) {
-            Log.w(TAG, "Not authorized — skipping sync. Open the app to authorize.")
-            return Result.success()  // Don't retry; user needs to open app first
+            Log.w(TAG, "Not authorized — open the app to connect Google Drive first")
+            return Result.success()
         }
 
         return try {
-            // Look back 7 days to catch any runs missed due to phone being offline
             val to = Instant.now()
-            val from = to.minusSeconds(7 * 24 * 60 * 60)
+            val from = to.minusSeconds(7 * 24 * 60 * 60)  // 7-day lookback to catch missed syncs
 
-            val runs = reader.readRuns(from, to)
-            Log.d(TAG, "Found ${runs.size} runs in Health Connect")
+            var uploaded = 0
 
-            var uploadedCount = 0
-            for (run in runs) {
-                val date = run.getString("date")
-                val startTime = run.getString("start_time").replace(":", "-")
-                val filename = "run_${date}_${startTime}.json"
-
-                val ok = uploader.uploadRun(filename, run)
-                if (ok) uploadedCount++
+            // --- Activities (all exercise types) ---
+            val activities = reader.readActivities(from, to)
+            Log.d(TAG, "Found ${activities.size} activity sessions")
+            for (activity in activities) {
+                val date = activity.getString("date")
+                val time = activity.getString("start_time").replace(":", "-")
+                val type = activity.getString("exercise_type")
+                val filename = "activities/activity_${date}_${time}_${type}.json"
+                if (uploader.uploadRun(filename, activity)) uploaded++
             }
 
-            Log.d(TAG, "Sync complete — uploaded $uploadedCount new run(s)")
+            // --- Daily summaries ---
+            val dailySummaries = reader.readDailySummaries(from, to)
+            Log.d(TAG, "Generating ${dailySummaries.size} daily summaries")
+            for ((dateStr, summary) in dailySummaries) {
+                val filename = "daily/daily_${dateStr}.json"
+                // Daily summaries are overwritten each sync (data accumulates during the day)
+                if (uploader.uploadOrUpdate(filename, summary)) uploaded++
+            }
+
+            Log.d(TAG, "Sync complete — $uploaded file(s) written to Drive")
             Result.success()
         } catch (e: Exception) {
             Log.e(TAG, "Sync failed", e)
@@ -65,19 +67,15 @@ class SyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
 
     companion object {
         private const val TAG = "SyncWorker"
-        private const val WORK_NAME = "run_sync"
+        private const val WORK_NAME = "health_sync"
 
-        /**
-         * Schedules the sync to run every 6 hours, only when internet is available.
-         * Calling this multiple times is safe — KEEP_EXISTING won't reschedule if already running.
-         */
         fun schedule(context: Context) {
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-
             val request = PeriodicWorkRequestBuilder<SyncWorker>(6, TimeUnit.HOURS)
-                .setConstraints(constraints)
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                )
                 .build()
 
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
@@ -85,20 +83,17 @@ class SyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                 ExistingPeriodicWorkPolicy.KEEP,
                 request
             )
-
             Log.d(TAG, "Sync scheduled every 6 hours")
         }
 
-        /** Run a one-off sync immediately (e.g. when user taps "Sync now"). */
         fun runNow(context: Context) {
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
+            val request = OneTimeWorkRequestBuilder<SyncWorker>()
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                )
                 .build()
-
-            val request = androidx.work.OneTimeWorkRequestBuilder<SyncWorker>()
-                .setConstraints(constraints)
-                .build()
-
             WorkManager.getInstance(context).enqueue(request)
         }
     }

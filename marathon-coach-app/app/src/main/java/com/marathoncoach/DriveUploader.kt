@@ -84,24 +84,22 @@ class DriveUploader(private val context: Context) {
     // -------------------------------------------------------------------------
 
     /**
-     * Uploads [json] as a file named [filename] into the RunningCoach folder on Drive.
-     * Creates the folder if it doesn't exist yet.
-     * Returns true on success.
+     * Uploads [json] as [filename] under the RunningCoach folder.
+     * Skips if the file already exists (safe for immutable activity files).
      */
     suspend fun uploadRun(filename: String, json: JSONObject): Boolean {
         val token = getValidAccessToken() ?: return false
-        val folderId = getOrCreateFolder(token) ?: return false
+        val folderId = getOrCreateSubfolder(token, filename) ?: return false
+        val leafName = filename.substringAfterLast('/')
 
-        // Check if a file with this name already exists (avoid duplicates on re-sync)
-        if (fileExists(token, folderId, filename)) {
-            Log.d(TAG, "File $filename already exists in Drive — skipping")
+        if (fileExists(token, folderId, leafName)) {
+            Log.d(TAG, "$filename already in Drive — skipping")
             return true
         }
 
-        // Multipart upload: metadata part + JSON body part
         val boundary = "coach_boundary_${System.currentTimeMillis()}"
         val metadata = JSONObject().apply {
-            put("name", filename)
+            put("name", leafName)
             put("parents", org.json.JSONArray().put(folderId))
         }
 
@@ -129,6 +127,48 @@ class DriveUploader(private val context: Context) {
             ok
         } catch (e: Exception) {
             Log.e(TAG, "Upload exception", e)
+            false
+        }
+    }
+
+    /**
+     * Uploads [json] as [filename], overwriting any existing file with the same name.
+     * Used for daily summary files which accumulate data throughout the day.
+     */
+    suspend fun uploadOrUpdate(filename: String, json: JSONObject): Boolean {
+        val token = getValidAccessToken() ?: return false
+        val folderId = getOrCreateSubfolder(token, filename) ?: return false
+        val leafName = filename.substringAfterLast('/')
+
+        // Delete existing file if present, then re-upload fresh
+        val existingId = getFileId(token, folderId, leafName)
+        if (existingId != null) {
+            deleteFile(token, existingId)
+        }
+
+        val boundary = "coach_boundary_${System.currentTimeMillis()}"
+        val metadata = JSONObject().apply {
+            put("name", leafName)
+            put("parents", org.json.JSONArray().put(folderId))
+        }
+        val multipartBody = buildString {
+            append("--$boundary\r\n")
+            append("Content-Type: application/json; charset=UTF-8\r\n\r\n")
+            append(metadata.toString())
+            append("\r\n--$boundary\r\n")
+            append("Content-Type: application/json\r\n\r\n")
+            append(json.toString(2))
+            append("\r\n--$boundary--")
+        }
+        val request = Request.Builder()
+            .url("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart")
+            .addHeader("Authorization", "Bearer $token")
+            .post(multipartBody.toRequestBody("multipart/related; boundary=$boundary".toMediaType()))
+            .build()
+        return try {
+            http.newCall(request).execute().isSuccessful
+        } catch (e: Exception) {
+            Log.e(TAG, "uploadOrUpdate failed", e)
             false
         }
     }
@@ -232,17 +272,82 @@ class DriveUploader(private val context: Context) {
         }
     }
 
+    /**
+     * Returns the folder ID for a subfolder path like "activities" or "daily",
+     * creating both the root RunningCoach folder and the subfolder if needed.
+     * filename may be "activities/foo.json" or "daily/bar.json".
+     */
+    private suspend fun getOrCreateSubfolder(token: String, filename: String): String? {
+        val rootId = getOrCreateFolder(token) ?: return null
+        val parts = filename.split('/')
+        if (parts.size < 2) return rootId   // no subfolder in path
+
+        val subfolderName = parts[0]
+        val cacheKey = "${KEY_FOLDER_ID}_$subfolderName"
+        prefs.getString(cacheKey, null)?.let { return it }
+
+        // Look for existing subfolder
+        val query = "name='$subfolderName' and '$rootId' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false"
+        val listReq = Request.Builder()
+            .url("https://www.googleapis.com/drive/v3/files?q=${java.net.URLEncoder.encode(query, "UTF-8")}&fields=files(id)")
+            .addHeader("Authorization", "Bearer $token")
+            .build()
+
+        return try {
+            val resp = http.newCall(listReq).execute()
+            val files = JSONObject(resp.body!!.string()).getJSONArray("files")
+            val id = if (files.length() > 0) {
+                files.getJSONObject(0).getString("id")
+            } else {
+                // Create it
+                val meta = JSONObject().apply {
+                    put("name", subfolderName)
+                    put("mimeType", "application/vnd.google-apps.folder")
+                    put("parents", org.json.JSONArray().put(rootId))
+                }
+                val createReq = Request.Builder()
+                    .url("https://www.googleapis.com/drive/v3/files?fields=id")
+                    .addHeader("Authorization", "Bearer $token")
+                    .post(meta.toString().toRequestBody("application/json".toMediaType()))
+                    .build()
+                JSONObject(http.newCall(createReq).execute().body!!.string()).getString("id")
+            }
+            prefs.edit().putString(cacheKey, id).apply()
+            id
+        } catch (e: Exception) {
+            Log.e(TAG, "Subfolder lookup/create failed for $subfolderName", e)
+            null
+        }
+    }
+
     private suspend fun fileExists(token: String, folderId: String, filename: String): Boolean {
+        return getFileId(token, folderId, filename) != null
+    }
+
+    private suspend fun getFileId(token: String, folderId: String, filename: String): String? {
         val query = "name='$filename' and '$folderId' in parents and trashed=false"
         val request = Request.Builder()
             .url("https://www.googleapis.com/drive/v3/files?q=${java.net.URLEncoder.encode(query, "UTF-8")}&fields=files(id)")
             .addHeader("Authorization", "Bearer $token")
             .build()
         return try {
-            val response = http.newCall(request).execute()
-            JSONObject(response.body!!.string()).getJSONArray("files").length() > 0
+            val files = JSONObject(http.newCall(request).execute().body!!.string()).getJSONArray("files")
+            if (files.length() > 0) files.getJSONObject(0).getString("id") else null
         } catch (e: Exception) {
-            false
+            null
+        }
+    }
+
+    private suspend fun deleteFile(token: String, fileId: String) {
+        try {
+            val request = Request.Builder()
+                .url("https://www.googleapis.com/drive/v3/files/$fileId")
+                .addHeader("Authorization", "Bearer $token")
+                .delete()
+                .build()
+            http.newCall(request).execute()
+        } catch (e: Exception) {
+            Log.w(TAG, "Delete failed for $fileId", e)
         }
     }
 
