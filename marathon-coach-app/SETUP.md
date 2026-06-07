@@ -29,10 +29,9 @@ This lets the app upload to *your* Google Drive.
    - Click **Publish App** (otherwise it stays in test mode and tokens expire after 7 days).
    - You'll see a warning about verification — for a personal app you can ignore it and click "Confirm".
 6. Go to **APIs & Services → Credentials** → **+ Create Credentials → OAuth client ID**:
-   - Application type: **Web application** (we use this type with a custom redirect URI).
-   - Name: `Marathon Coach Android`.
-   - Under **Authorised redirect URIs**, add: `com.marathoncoach://oauth2callback`
-   - Click **Create**.
+   - Application type: **Desktop app** ← important, not "Web application".
+   - Name: `Marathon Coach`.
+   - Click **Create**. No redirect URI to configure — Google automatically allows localhost for Desktop app type.
 7. You'll see a popup with **Client ID** and **Client Secret**. Copy both — you need them in Step 3.
 
 ---

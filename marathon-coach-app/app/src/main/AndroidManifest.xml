@@ -23,15 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Catches the OAuth redirect back from the browser -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="com.marathoncoach"
-                    android:host="oauth2callback" />
-            </intent-filter>
+            <!-- No custom URI scheme needed — OAuth redirect goes to localhost:8765 -->
         </activity>
 
         <!-- WorkManager sync worker -->

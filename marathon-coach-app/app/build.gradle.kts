@@ -26,8 +26,7 @@ android {
         // Name of the folder that will be created in your Google Drive
         buildConfigField("String", "DRIVE_FOLDER_NAME", "\"RunningCoach\"")
 
-        // OAuth redirect URI — must match what you register in Google Cloud Console
-        manifestPlaceholders["appAuthRedirectScheme"] = "com.marathoncoach"
+        // OAuth uses localhost:8765 redirect — no manifest placeholder needed
     }
 
     buildFeatures {

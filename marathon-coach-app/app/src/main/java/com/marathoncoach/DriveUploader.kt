@@ -13,11 +13,14 @@ import org.json.JSONObject
 /**
  * Handles OAuth2 token management and uploading JSON files to Google Drive.
  *
- * Uses the standard "Android" OAuth2 flow:
- *   1. On first run, MainActivity redirects to Google's consent screen.
- *   2. Google redirects back to the app via com.marathoncoach://oauth2callback?code=...
- *   3. We exchange the code for access + refresh tokens and store them.
+ * Uses the "Desktop app" OAuth2 flow (localhost redirect):
+ *   1. On first run, MainActivity starts a local HTTP server on port 8765.
+ *   2. Opens browser → user authorizes → Google redirects to http://127.0.0.1:8765?code=...
+ *   3. Local server catches the code, passes it here to exchange for tokens.
  *   4. All subsequent calls use the stored refresh token to get fresh access tokens.
+ *
+ * Why "Desktop app" credentials? Google's "Web application" type rejects custom URI schemes
+ * (com.example://), but "Desktop app" type implicitly allows localhost redirects.
  */
 class DriveUploader(private val context: Context) {
 
@@ -246,7 +249,9 @@ class DriveUploader(private val context: Context) {
     companion object {
         private const val TAG = "DriveUploader"
         private const val FOLDER_NAME = BuildConfig.DRIVE_FOLDER_NAME
-        private const val REDIRECT_URI = "com.marathoncoach://oauth2callback"
+        // Desktop app OAuth uses localhost — no custom scheme needed, no console config needed
+        const val REDIRECT_PORT = 8765
+        private const val REDIRECT_URI = "http://127.0.0.1:$REDIRECT_PORT"
 
         // SharedPreferences keys
         private const val KEY_REFRESH_TOKEN = "refresh_token"
