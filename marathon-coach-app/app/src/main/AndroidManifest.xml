@@ -36,14 +36,9 @@
                 android:value="androidx.startup" />
         </provider>
 
-        <!-- Required for Health Connect -->
-        <queries>
-            <package android:name="com.google.android.apps.healthdata" />
-        </queries>
-
     </application>
 
-    <!-- Tell Health Connect what data types this app can read -->
+    <!-- Required for Health Connect — must be a direct child of <manifest>, not <application> -->
     <queries>
         <package android:name="com.google.android.apps.healthdata" />
     </queries>
