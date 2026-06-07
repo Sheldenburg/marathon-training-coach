@@ -69,6 +69,9 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
+    // Chrome Custom Tabs — keeps app alive during OAuth so localhost server isn't killed
+    implementation("androidx.browser:browser:1.8.0")
+
     // UI
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

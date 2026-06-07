@@ -3,6 +3,7 @@ package com.marathoncoach
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.browser.customtabs.CustomTabsIntent
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -102,11 +103,15 @@ class MainActivity : AppCompatActivity() {
             updateUi()
         }
 
-        // 3. Open browser slightly after launching the coroutine (server is starting on IO thread)
-        //    Small delay is fine — server is ready well before the user finishes the browser flow
+        // 3. Open Chrome Custom Tabs slightly after launching the coroutine.
+        //    Custom Tabs keep this Activity in the foreground (unlike a full external browser),
+        //    so the local server coroutine stays alive when Google redirects to localhost:8765.
         android.os.Handler(mainLooper).postDelayed({
             val url = uploader.buildAuthUrl()
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            CustomTabsIntent.Builder()
+                .setShowTitle(true)
+                .build()
+                .launchUrl(this, Uri.parse(url))
         }, 300)
     }
 
