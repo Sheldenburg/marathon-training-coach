@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Health Connect permissions — declared here, requested at runtime -->
+    <uses-permission android:name="android.permission.health.READ_EXERCISE" />
+    <uses-permission android:name="android.permission.health.READ_DISTANCE" />
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+    <uses-permission android:name="android.permission.health.READ_SPEED" />
+
+    <application
+        android:allowBackup="true"
+        android:label="Marathon Coach"
+        android:theme="@style/Theme.MarathonCoach">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Catches the OAuth redirect back from the browser -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="com.marathoncoach"
+                    android:host="oauth2callback" />
+            </intent-filter>
+        </activity>
+
+        <!-- WorkManager sync worker -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <!-- Required for Health Connect -->
+        <queries>
+            <package android:name="com.google.android.apps.healthdata" />
+        </queries>
+
+    </application>
+
+    <!-- Tell Health Connect what data types this app can read -->
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
+
+</manifest>

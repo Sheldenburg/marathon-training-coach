@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🏃 Marathon Coach Sync"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set up once — it runs automatically after that."
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/btnConnectDrive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. Connect Google Drive"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnGrantHealth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Grant Health Connect Access"
+        android:enabled="false"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnSyncNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sync Now (optional)"
+        android:enabled="false"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tap 'Connect Google Drive' to begin."
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textColor="#444444" />
+
+</LinearLayout>
