@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             .setMessage(
                 "After approving in the browser:\n\n" +
                 "1. The page will show an authorization code\n" +
-                "2. Tap "Copy Code" on that page\n" +
+                "2. Tap 'Copy Code' on that page\n" +
                 "3. Come back here and paste it below"
             )
             .setView(input)
