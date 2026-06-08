@@ -10,38 +10,46 @@
 - Samsung Galaxy S23/S25
 
 ## Goal Race
-- **Race:** (e.g. Auckland Marathon / Queenstown Marathon)
-- **Date:** (race date)
-- **Target:** (e.g. finish / sub-4:00 / sub-3:30)
+- **Race:** Half Marathon in Sydney (21.1 km) — e.g. Blackmores Sydney Running Festival (Sep) or Sydney Half (May)
+- **Date:** Not fixed yet — targeting a race **3–6 months out** (≈ Sep–Dec 2026)
+- **Target:** **Complete** the half marathon (finish strong, time not a priority for the first one)
 
 ## Current Fitness
-- **Weekly volume:** ~__ km/week
-- **Longest recent run:** __ km
-- **Recent race / time trial:** (e.g. 10K in 52:00, or none)
-- **Easy pace (comfortable, can hold a conversation):** ~__:__ min/km
-- **Heart rate zones:** (if known — otherwise Claude will estimate from HR data)
+- **Weekly volume:** ~6 km/week (low base — building from here)
+- **Longest recent run:** (unknown — likely ~3–5 km)
+- **Recent race / time trial:** none
+- **Easy pace:** to be determined from watch HR/pace data
+- **Heart rate zones:** estimate from HR data once it's flowing
 
 ## Schedule
-- **Days available to run:** __ days/week
-- **Long run day:** (e.g. Saturday or Sunday)
-- **Any hard constraints:** (e.g. can't run Monday)
+- **Days available to run:** 3 days/week
+- **Long run day:** (suggest weekend — Saturday or Sunday)
+- **Any hard constraints:** none stated
 
 ## Injuries / Limitations
-- (e.g. none / left knee patella tendon — needs easy build-up)
+- None — healthy, but low mileage base means **gradual build is essential** to avoid injury
 
 ## Preferences
-- (e.g. prefer road running / hate treadmills / love trail / have a hilly area nearby)
+- (e.g. road / trail / treadmill — let me know)
 
 ---
 
+## Coaching strategy notes
+
+- **Gap to close:** ~6 km/week → able to run 21.1 km. Very achievable on 3 days/week,
+  especially toward the 5–6 month end. The 3-month end is doable but aggressive from this
+  base, so the safer plan targets **~4–5 months** with the option to pick an earlier race
+  if the build goes smoothly.
+- **Core principle:** grow weekly volume no more than ~10% per week; one long run that
+  gradually extends toward ~18 km before race day; keep most running easy/conversational.
+- **3-day structure (typical week):** 1 easy run, 1 short quality/effort run, 1 long run.
+- **Injury guard:** from a 6 km base, the #1 risk is ramping too fast. Prioritise
+  consistency over speed for the first 6–8 weeks.
+
 ## How to use Claude as your coach
 
-Open Claude Code in this project folder and say things like:
-
-- **"Check my training this week"** — I'll pull your recent runs from Drive and give weekly feedback.
-- **"Am I on track for my goal race?"** — I'll assess your fitness trajectory.
-- **"What should my long run be this weekend?"** — I'll prescribe based on where you are in the cycle.
-- **"My left knee was sore after yesterday's run — what do I do?"** — injury/load management advice.
-- **"Build me a 12-week training plan"** — full periodized plan based on your profile above.
-
-Fill in the fields above first — the more I know, the better the advice.
+In the Claude phone app (Marathon Coach project) or here, say things like:
+- "How was my week?" — feedback on recent runs
+- "What should I run this week?" — prescribe the 3 sessions
+- "Build me a plan to the Sydney half" — full periodized plan
+- "Am I on track?" — fitness check against the goal
