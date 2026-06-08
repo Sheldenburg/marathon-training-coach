@@ -9,10 +9,11 @@
 - Samsung Galaxy Watch 6
 - Samsung Galaxy S23/S25
 
-## Goal Race
-- **Race:** Half Marathon in Sydney (21.1 km) — e.g. Blackmores Sydney Running Festival (Sep) or Sydney Half (May)
-- **Date:** Not fixed yet — targeting a race **3–6 months out** (≈ Sep–Dec 2026)
-- **Target:** **Complete** the half marathon (finish strong, time not a priority for the first one)
+## Race Calendar
+| Race | Date | Distance | Goal |
+|------|------|----------|------|
+| Sydney Running Festival 10km | Sun 13 Sep 2026 | 10 km | Tune-up — run strong, gauge fitness |
+| BBBRUN26 Half Marathon | Sun 25 Oct 2026 | 21.1 km | **Finish line** — complete the half |
 
 ## Current Fitness
 - **Weekly volume:** ~6 km/week (low base — building from here)
@@ -36,12 +37,15 @@
 
 ## Coaching strategy notes
 
-- **Gap to close:** ~6 km/week → able to run 21.1 km. Very achievable on 3 days/week,
-  especially toward the 5–6 month end. The 3-month end is doable but aggressive from this
-  base, so the safer plan targets **~4–5 months** with the option to pick an earlier race
-  if the build goes smoothly.
+- **Two-race structure:** The 10km on Sep 13 is a tune-up at the end of Week 14 — race it
+  hard, use it to calibrate half-marathon goal pace, then recover and build to the half.
+- **Gap to close:** ~6 km/week → 21.1 km finish. Very achievable on 3 days/week over 20 weeks.
+- **10km Prep (W11–14):** Introduce tempo-style quality sessions, build to a 12 km long run,
+  then taper for race day. The 10km should feel controlled — not an all-out effort.
+- **Half Build (W15–17):** Recover from 10km then ramp back up sharply. Peak long run is
+  18 km in Week 17 — if you can do that, you can finish 21.1 km.
 - **Core principle:** grow weekly volume no more than ~10% per week; one long run that
-  gradually extends toward ~18 km before race day; keep most running easy/conversational.
+  gradually extends toward ~18 km; keep most running easy/conversational (~80%).
 - **3-day structure (typical week):** 1 easy run, 1 short quality/effort run, 1 long run.
 - **Injury guard:** from a 6 km base, the #1 risk is ramping too fast. Prioritise
   consistency over speed for the first 6–8 weeks.
@@ -51,5 +55,6 @@
 In the Claude phone app (Marathon Coach project) or here, say things like:
 - "How was my week?" — feedback on recent runs
 - "What should I run this week?" — prescribe the 3 sessions
-- "Build me a plan to the Sydney half" — full periodized plan
-- "Am I on track?" — fitness check against the goal
+- "Am I on track for Sydney 10km?" — check W14 tune-up readiness
+- "Am I on track for BBBRUN26?" — check half marathon fitness
+- "What pace should I target for the 10km?" — use recent training data

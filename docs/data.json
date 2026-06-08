@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-08 12:06",
-  "goal": "Sydney Half Marathon",
+  "generated_at": "2026-06-09 06:40",
+  "goal": "BBBRUN26 Half Marathon",
   "distance_km": 21.1,
   "target": "Complete",
   "race_date": "2026-10-25",
   "start_date": "2026-06-08",
-  "days_to_race": 139,
+  "days_to_race": 138,
   "current_week": 1,
   "total_weeks": 20,
   "summary": {
@@ -128,7 +128,7 @@
     },
     {
       "week": 11,
-      "phase": "Endurance",
+      "phase": "10k Prep",
       "start": "2026-08-17",
       "end": "2026-08-23",
       "target_total": 20,
@@ -139,7 +139,7 @@
     },
     {
       "week": 12,
-      "phase": "Endurance",
+      "phase": "10k Prep",
       "start": "2026-08-24",
       "end": "2026-08-30",
       "target_total": 15,
@@ -150,9 +150,42 @@
     },
     {
       "week": 13,
-      "phase": "Specific",
+      "phase": "10k Prep",
       "start": "2026-08-31",
       "end": "2026-09-06",
+      "target_total": 22,
+      "target_long": 12,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 14,
+      "phase": "10k Race",
+      "start": "2026-09-07",
+      "end": "2026-09-13",
+      "target_total": 12,
+      "target_long": 10,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 15,
+      "phase": "Half Build",
+      "start": "2026-09-14",
+      "end": "2026-09-20",
+      "target_total": 18,
+      "target_long": 10,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 16,
+      "phase": "Half Build",
+      "start": "2026-09-21",
+      "end": "2026-09-27",
       "target_total": 23,
       "target_long": 13,
       "actual_total": 0.0,
@@ -160,41 +193,8 @@
       "state": "upcoming"
     },
     {
-      "week": 14,
-      "phase": "Specific",
-      "start": "2026-09-07",
-      "end": "2026-09-13",
-      "target_total": 24,
-      "target_long": 14,
-      "actual_total": 0.0,
-      "actual_long": 0.0,
-      "state": "upcoming"
-    },
-    {
-      "week": 15,
-      "phase": "Specific",
-      "start": "2026-09-14",
-      "end": "2026-09-20",
-      "target_total": 26,
-      "target_long": 16,
-      "actual_total": 0.0,
-      "actual_long": 0.0,
-      "state": "upcoming"
-    },
-    {
-      "week": 16,
-      "phase": "Specific",
-      "start": "2026-09-21",
-      "end": "2026-09-27",
-      "target_total": 19,
-      "target_long": 11,
-      "actual_total": 0.0,
-      "actual_long": 0.0,
-      "state": "upcoming"
-    },
-    {
       "week": 17,
-      "phase": "Specific",
+      "phase": "Half Build",
       "start": "2026-09-28",
       "end": "2026-10-04",
       "target_total": 28,
@@ -238,6 +238,32 @@
     }
   ],
   "recent_runs": [],
+  "events": [
+    {
+      "name": "Sydney Running Festival 10km",
+      "date": "2026-09-13",
+      "distance_km": 10,
+      "type": "tune-up",
+      "days_to_event": 96,
+      "plan_week": 14
+    },
+    {
+      "name": "BBBRUN26 Half Marathon",
+      "date": "2026-10-25",
+      "distance_km": 21.1,
+      "type": "goal",
+      "days_to_event": 138,
+      "plan_week": 20
+    }
+  ],
+  "next_event": {
+    "name": "Sydney Running Festival 10km",
+    "date": "2026-09-13",
+    "distance_km": 10,
+    "type": "tune-up",
+    "days_to_event": 96,
+    "plan_week": 14
+  },
   "data_status": {
     "exercise_sessions": 1,
     "steps_records": 5,

@@ -42,6 +42,14 @@
   .foot { text-align: center; color: var(--muted); font-size: 12px; margin: 20px 0; }
   .phase-Base{color:#1565c0} .phase-Endurance{color:#6a1b9a}
   .phase-Specific{color:#c62828} .phase-Taper{color:#2e7d32} .phase-Race{color:var(--orange);font-weight:700}
+  .phase-10kPrep{color:#e65100} .phase-10kRace{color:var(--orange);font-weight:700}
+  .phase-HalfBuild{color:#c62828}
+  .races { display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
+  .race-chip { background:rgba(255,255,255,.18); border-radius:20px; padding:5px 14px;
+               font-size:13px; display:flex; align-items:center; gap:6px; }
+  .race-chip.next { background:rgba(255,255,255,.32); font-weight:600; }
+  .race-chip .badge { background:#fff; color:var(--orange); border-radius:10px;
+                      padding:1px 7px; font-size:11px; font-weight:700; }
 </style>
 </head>
 <body>
@@ -50,10 +58,11 @@
   <h1 id="goal">🏃 Loading…</h1>
   <div class="goal" id="goalSub"></div>
   <div class="countdown">
-    <div><div class="num" id="cdDays">–</div><div class="lbl">days to race</div></div>
+    <div><div class="num" id="cdDays">–</div><div class="lbl" id="cdDaysLbl">days to race</div></div>
     <div><div class="num" id="cdWeek">–</div><div class="lbl">current week</div></div>
     <div><div class="num" id="cdProgress">–</div><div class="lbl">plan progress</div></div>
   </div>
+  <div class="races" id="racesRow"></div>
 </div>
 
 <div class="cards">
@@ -93,11 +102,34 @@ async function load() {
 
   document.getElementById('goal').textContent = '🏃 ' + d.goal;
   document.getElementById('goalSub').textContent =
-    `${d.distance_km} km · Target: ${d.target} · Race ${d.race_date}`;
-  document.getElementById('cdDays').textContent = d.days_to_race;
+    `${d.distance_km} km · Target: ${d.target}`;
   document.getElementById('cdWeek').textContent = `${d.current_week}/${d.total_weeks}`;
   document.getElementById('cdProgress').textContent =
     Math.round(d.current_week / d.total_weeks * 100) + '%';
+
+  // Next event countdown
+  const ne = d.next_event;
+  if (ne) {
+    document.getElementById('cdDays').textContent = Math.max(0, ne.days_to_event);
+    document.getElementById('cdDaysLbl').textContent =
+      `days to ${ne.distance_km < 21 ? '10km' : 'half'}`;
+  } else {
+    document.getElementById('cdDays').textContent = d.days_to_race;
+  }
+
+  // Race chips row
+  const racesRow = document.getElementById('racesRow');
+  (d.events || []).forEach(ev => {
+    const isNext = d.next_event && ev.date === d.next_event.date;
+    const past = ev.days_to_event < 0;
+    const icon = ev.distance_km < 21 ? '🏁' : '🏆';
+    const chip = document.createElement('div');
+    chip.className = 'race-chip' + (isNext ? ' next' : '') + (past ? ' past' : '');
+    chip.innerHTML = `${icon} ${ev.name}` +
+      (isNext ? ` <span class="badge">${ev.days_to_event}d</span>` :
+       past ? ` <span class="badge">done</span>` : ` · ${ev.date}`);
+    racesRow.appendChild(chip);
+  });
 
   const s = d.summary;
   document.getElementById('mTotal').textContent = s.total_km_run;
@@ -157,7 +189,7 @@ async function load() {
     '<table><tr><th>Wk</th><th>Phase</th><th>Dates</th><th>Target</th><th>Long</th><th>Actual</th><th></th></tr>' +
     d.weeks.map(w => `<tr>
       <td><b>${w.week}</b></td>
-      <td class="phase-${w.phase}">${w.phase}</td>
+      <td class="phase-${w.phase.replace(/[\s-]/g,'')}">${w.phase}</td>
       <td>${w.start.slice(5)} → ${w.end.slice(5)}</td>
       <td>${w.target_total} km</td>
       <td>${w.target_long} km</td>

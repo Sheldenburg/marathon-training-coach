@@ -75,6 +75,19 @@ def main():
 
     current_week = week_index(today) or (1 if today < start else len(plan["weeks"]))
 
+    # Events (races)
+    events_out = []
+    next_event = None
+    for ev in plan.get("events", []):
+        ev_date = parse_date(ev["date"])
+        days = (ev_date - today).days
+        ev_out = {**ev, "days_to_event": days, "plan_week": week_index(ev_date)}
+        events_out.append(ev_out)
+        if days >= 0 and next_event is None:
+            next_event = ev_out
+    if next_event is None and events_out:
+        next_event = events_out[-1]
+
     weeks_out = []
     for w in plan["weeks"]:
         n = w["week"]
@@ -129,6 +142,8 @@ def main():
             }
             for r in runs[-15:][::-1]
         ],
+        "events": events_out,
+        "next_event": next_event,
         "data_status": report["row_counts"],
     }
 

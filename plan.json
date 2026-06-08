@@ -1,30 +1,44 @@
 {
-  "goal": "Sydney Half Marathon",
+  "goal": "BBBRUN26 Half Marathon",
   "distance_km": 21.1,
   "target": "Complete",
   "start_date": "2026-06-08",
   "race_date": "2026-10-25",
   "days_per_week": 3,
+  "events": [
+    {
+      "name": "Sydney Running Festival 10km",
+      "date": "2026-09-13",
+      "distance_km": 10,
+      "type": "tune-up"
+    },
+    {
+      "name": "BBBRUN26 Half Marathon",
+      "date": "2026-10-25",
+      "distance_km": 21.1,
+      "type": "goal"
+    }
+  ],
   "weeks": [
-    { "week": 1,  "phase": "Base",       "target_total": 8,    "target_long": 3 },
-    { "week": 2,  "phase": "Base",       "target_total": 10,   "target_long": 4 },
-    { "week": 3,  "phase": "Base",       "target_total": 11,   "target_long": 5 },
-    { "week": 4,  "phase": "Base",       "target_total": 9,    "target_long": 4 },
-    { "week": 5,  "phase": "Endurance",  "target_total": 13,   "target_long": 6 },
-    { "week": 6,  "phase": "Endurance",  "target_total": 14,   "target_long": 7 },
-    { "week": 7,  "phase": "Endurance",  "target_total": 16,   "target_long": 8 },
-    { "week": 8,  "phase": "Endurance",  "target_total": 12,   "target_long": 6 },
-    { "week": 9,  "phase": "Endurance",  "target_total": 17,   "target_long": 9 },
-    { "week": 10, "phase": "Endurance",  "target_total": 18.5, "target_long": 10 },
-    { "week": 11, "phase": "Endurance",  "target_total": 20,   "target_long": 11 },
-    { "week": 12, "phase": "Endurance",  "target_total": 15,   "target_long": 8 },
-    { "week": 13, "phase": "Specific",   "target_total": 23,   "target_long": 13 },
-    { "week": 14, "phase": "Specific",   "target_total": 24,   "target_long": 14 },
-    { "week": 15, "phase": "Specific",   "target_total": 26,   "target_long": 16 },
-    { "week": 16, "phase": "Specific",   "target_total": 19,   "target_long": 11 },
-    { "week": 17, "phase": "Specific",   "target_total": 28,   "target_long": 18 },
-    { "week": 18, "phase": "Taper",      "target_total": 20,   "target_long": 12 },
-    { "week": 19, "phase": "Taper",      "target_total": 14,   "target_long": 8 },
-    { "week": 20, "phase": "Race",       "target_total": 21.1, "target_long": 21.1 }
+    { "week": 1,  "phase": "Base",      "target_total": 8,    "target_long": 3 },
+    { "week": 2,  "phase": "Base",      "target_total": 10,   "target_long": 4 },
+    { "week": 3,  "phase": "Base",      "target_total": 11,   "target_long": 5 },
+    { "week": 4,  "phase": "Base",      "target_total": 9,    "target_long": 4 },
+    { "week": 5,  "phase": "Endurance", "target_total": 13,   "target_long": 6 },
+    { "week": 6,  "phase": "Endurance", "target_total": 14,   "target_long": 7 },
+    { "week": 7,  "phase": "Endurance", "target_total": 16,   "target_long": 8 },
+    { "week": 8,  "phase": "Endurance", "target_total": 12,   "target_long": 6 },
+    { "week": 9,  "phase": "Endurance", "target_total": 17,   "target_long": 9 },
+    { "week": 10, "phase": "Endurance", "target_total": 18.5, "target_long": 10 },
+    { "week": 11, "phase": "10k Prep",  "target_total": 20,   "target_long": 11 },
+    { "week": 12, "phase": "10k Prep",  "target_total": 15,   "target_long": 8 },
+    { "week": 13, "phase": "10k Prep",  "target_total": 22,   "target_long": 12 },
+    { "week": 14, "phase": "10k Race",  "target_total": 12,   "target_long": 10 },
+    { "week": 15, "phase": "Half Build","target_total": 18,   "target_long": 10 },
+    { "week": 16, "phase": "Half Build","target_total": 23,   "target_long": 13 },
+    { "week": 17, "phase": "Half Build","target_total": 28,   "target_long": 18 },
+    { "week": 18, "phase": "Taper",     "target_total": 20,   "target_long": 12 },
+    { "week": 19, "phase": "Taper",     "target_total": 14,   "target_long": 8 },
+    { "week": 20, "phase": "Race",      "target_total": 21.1, "target_long": 21.1 }
   ]
 }
