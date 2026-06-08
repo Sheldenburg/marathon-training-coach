@@ -1,0 +1,5 @@
+data/latest.db
+data/history/
+*.zip
+hc_export/
+coach.keystore
