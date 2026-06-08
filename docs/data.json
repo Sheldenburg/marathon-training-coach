@@ -1,0 +1,249 @@
+{
+  "generated_at": "2026-06-08 12:06",
+  "goal": "Sydney Half Marathon",
+  "distance_km": 21.1,
+  "target": "Complete",
+  "race_date": "2026-10-25",
+  "start_date": "2026-06-08",
+  "days_to_race": 139,
+  "current_week": 1,
+  "total_weeks": 20,
+  "summary": {
+    "total_km_run": 0.0,
+    "longest_run_km": 0,
+    "num_runs": 0,
+    "this_week_target": 8,
+    "this_week_actual": 0.0
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "phase": "Base",
+      "start": "2026-06-08",
+      "end": "2026-06-14",
+      "target_total": 8,
+      "target_long": 3,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "current"
+    },
+    {
+      "week": 2,
+      "phase": "Base",
+      "start": "2026-06-15",
+      "end": "2026-06-21",
+      "target_total": 10,
+      "target_long": 4,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 3,
+      "phase": "Base",
+      "start": "2026-06-22",
+      "end": "2026-06-28",
+      "target_total": 11,
+      "target_long": 5,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 4,
+      "phase": "Base",
+      "start": "2026-06-29",
+      "end": "2026-07-05",
+      "target_total": 9,
+      "target_long": 4,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 5,
+      "phase": "Endurance",
+      "start": "2026-07-06",
+      "end": "2026-07-12",
+      "target_total": 13,
+      "target_long": 6,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 6,
+      "phase": "Endurance",
+      "start": "2026-07-13",
+      "end": "2026-07-19",
+      "target_total": 14,
+      "target_long": 7,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 7,
+      "phase": "Endurance",
+      "start": "2026-07-20",
+      "end": "2026-07-26",
+      "target_total": 16,
+      "target_long": 8,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 8,
+      "phase": "Endurance",
+      "start": "2026-07-27",
+      "end": "2026-08-02",
+      "target_total": 12,
+      "target_long": 6,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 9,
+      "phase": "Endurance",
+      "start": "2026-08-03",
+      "end": "2026-08-09",
+      "target_total": 17,
+      "target_long": 9,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 10,
+      "phase": "Endurance",
+      "start": "2026-08-10",
+      "end": "2026-08-16",
+      "target_total": 18.5,
+      "target_long": 10,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 11,
+      "phase": "Endurance",
+      "start": "2026-08-17",
+      "end": "2026-08-23",
+      "target_total": 20,
+      "target_long": 11,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 12,
+      "phase": "Endurance",
+      "start": "2026-08-24",
+      "end": "2026-08-30",
+      "target_total": 15,
+      "target_long": 8,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 13,
+      "phase": "Specific",
+      "start": "2026-08-31",
+      "end": "2026-09-06",
+      "target_total": 23,
+      "target_long": 13,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 14,
+      "phase": "Specific",
+      "start": "2026-09-07",
+      "end": "2026-09-13",
+      "target_total": 24,
+      "target_long": 14,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 15,
+      "phase": "Specific",
+      "start": "2026-09-14",
+      "end": "2026-09-20",
+      "target_total": 26,
+      "target_long": 16,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 16,
+      "phase": "Specific",
+      "start": "2026-09-21",
+      "end": "2026-09-27",
+      "target_total": 19,
+      "target_long": 11,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 17,
+      "phase": "Specific",
+      "start": "2026-09-28",
+      "end": "2026-10-04",
+      "target_total": 28,
+      "target_long": 18,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 18,
+      "phase": "Taper",
+      "start": "2026-10-05",
+      "end": "2026-10-11",
+      "target_total": 20,
+      "target_long": 12,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 19,
+      "phase": "Taper",
+      "start": "2026-10-12",
+      "end": "2026-10-18",
+      "target_total": 14,
+      "target_long": 8,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    },
+    {
+      "week": 20,
+      "phase": "Race",
+      "start": "2026-10-19",
+      "end": "2026-10-25",
+      "target_total": 21.1,
+      "target_long": 21.1,
+      "actual_total": 0.0,
+      "actual_long": 0.0,
+      "state": "upcoming"
+    }
+  ],
+  "recent_runs": [],
+  "data_status": {
+    "exercise_sessions": 1,
+    "steps_records": 5,
+    "distance_records": 0,
+    "heart_rate_records": 0,
+    "sleep_sessions": 0,
+    "weight_records": 0
+  }
+}

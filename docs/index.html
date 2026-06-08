@@ -1,140 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marathon Coach — Connect Google Drive</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #f5f5f5;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 32px 24px;
-            max-width: 420px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-        }
-        .icon { font-size: 48px; margin-bottom: 16px; }
-        h1 { font-size: 22px; color: #1a1a1a; margin-bottom: 8px; }
-        .subtitle { color: #666; font-size: 15px; margin-bottom: 24px; line-height: 1.5; }
-        .code-label { font-size: 13px; color: #888; text-transform: uppercase;
-                      letter-spacing: 0.5px; margin-bottom: 8px; }
-        .code-box {
-            background: #f0f0f0;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 16px;
-            font-family: "SF Mono", "Courier New", monospace;
-            font-size: 13px;
-            word-break: break-all;
-            line-height: 1.6;
-            color: #222;
-            margin-bottom: 16px;
-            text-align: left;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-        .code-box:active { border-color: #E64A19; }
-        .copy-btn {
-            background: #E64A19;
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
-        }
-        .copy-btn:active { background: #BF360C; }
-        .copied-msg {
-            display: none;
-            color: #2e7d32;
-            font-weight: 600;
-            margin-top: 12px;
-            font-size: 15px;
-        }
-        .step {
-            background: #FFF3E0;
-            border-radius: 10px;
-            padding: 14px;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #555;
-            line-height: 1.6;
-            text-align: left;
-        }
-        .step strong { color: #E64A19; }
-        .error-card h1 { color: #c62828; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏃 Sydney Half — Training Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --orange: #E64A19; --orange-light: #FF7043; --bg: #f4f5f7;
+    --card: #fff; --text: #1a1a2e; --muted: #6b7280; --green: #2e7d32;
+    --done: #c8e6c9; --current: #fff3e0; --upcoming: #f0f0f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         background: var(--bg); color: var(--text); padding: 16px; max-width: 980px; margin: 0 auto; }
+  h1 { font-size: 24px; margin-bottom: 4px; }
+  .sub { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+  .hero { background: linear-gradient(135deg, var(--orange), var(--orange-light));
+          color: #fff; border-radius: 16px; padding: 24px; margin-bottom: 16px; }
+  .hero h1 { font-size: 26px; }
+  .hero .goal { font-size: 15px; opacity: .95; margin-top: 4px; }
+  .countdown { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
+  .countdown div { text-align: center; }
+  .countdown .num { font-size: 32px; font-weight: 700; line-height: 1; }
+  .countdown .lbl { font-size: 12px; opacity: .9; text-transform: uppercase; letter-spacing: .5px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .card { background: var(--card); border-radius: 14px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .card .v { font-size: 28px; font-weight: 700; color: var(--orange); }
+  .card .l { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .panel { background: var(--card); border-radius: 14px; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .panel h2 { font-size: 16px; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #eee; }
+  th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .s-done { background: var(--done); color: var(--green); }
+  .s-current { background: var(--current); color: var(--orange); }
+  .s-upcoming { background: var(--upcoming); color: var(--muted); }
+  .empty { color: var(--muted); font-style: italic; padding: 12px 0; }
+  canvas { max-height: 280px; }
+  .foot { text-align: center; color: var(--muted); font-size: 12px; margin: 20px 0; }
+  .phase-Base{color:#1565c0} .phase-Endurance{color:#6a1b9a}
+  .phase-Specific{color:#c62828} .phase-Taper{color:#2e7d32} .phase-Race{color:var(--orange);font-weight:700}
+</style>
 </head>
 <body>
-<div class="card" id="card">
-    <div id="content">
-        <div class="icon">⏳</div>
-        <h1>Loading…</h1>
-    </div>
+
+<div class="hero">
+  <h1 id="goal">🏃 Loading…</h1>
+  <div class="goal" id="goalSub"></div>
+  <div class="countdown">
+    <div><div class="num" id="cdDays">–</div><div class="lbl">days to race</div></div>
+    <div><div class="num" id="cdWeek">–</div><div class="lbl">current week</div></div>
+    <div><div class="num" id="cdProgress">–</div><div class="lbl">plan progress</div></div>
+  </div>
 </div>
 
+<div class="cards">
+  <div class="card"><div class="v" id="mTotal">–</div><div class="l">Total km run</div></div>
+  <div class="card"><div class="v" id="mLongest">–</div><div class="l">Longest run (km)</div></div>
+  <div class="card"><div class="v" id="mThisWeek">–</div><div class="l">This week (km / target)</div></div>
+  <div class="card"><div class="v" id="mRuns">–</div><div class="l">Runs logged</div></div>
+</div>
+
+<div class="panel">
+  <h2>Weekly volume — actual vs plan</h2>
+  <canvas id="volChart"></canvas>
+</div>
+
+<div class="panel">
+  <h2>Long run progression</h2>
+  <canvas id="longChart"></canvas>
+</div>
+
+<div class="panel">
+  <h2>Recent runs</h2>
+  <div id="recentWrap"></div>
+</div>
+
+<div class="panel">
+  <h2>Full training plan</h2>
+  <div id="planWrap"></div>
+</div>
+
+<div class="foot" id="foot"></div>
+
 <script>
-    const params = new URLSearchParams(window.location.search);
-    const code  = params.get('code');
-    const error = params.get('error');
-    const content = document.getElementById('content');
+async function load() {
+  // cache-bust so the dashboard always shows the freshest data
+  const res = await fetch('data.json?t=' + Date.now());
+  const d = await res.json();
 
-    if (error) {
-        content.innerHTML = `
-            <div class="icon">❌</div>
-            <h1>Authorization failed</h1>
-            <p class="subtitle">Error: <strong>${error}</strong><br>Close this tab and try again in the app.</p>
-        `;
-    } else if (code) {
-        content.innerHTML = `
-            <div class="icon">🏃</div>
-            <h1>Almost there!</h1>
-            <p class="subtitle">Copy this code and paste it into the <strong>Marathon Coach</strong> app.</p>
-            <div class="code-label">Your authorization code</div>
-            <div class="code-box" id="codeBox" onclick="copyCode()">${code}</div>
-            <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
-            <div class="copied-msg" id="copiedMsg">✅ Copied! Switch back to the app and paste it.</div>
-            <div class="step">
-                <strong>Next:</strong> Switch back to the Marathon Coach app →
-                paste this code into the box → tap <strong>Connect</strong>.
-            </div>
-        `;
-    } else {
-        content.innerHTML = `
-            <div class="icon">🏃</div>
-            <h1>Marathon Coach</h1>
-            <p class="subtitle">This page is used during Google Drive authorization.<br>
-            Open the Marathon Coach app and tap "Connect Google Drive" to begin.</p>
-        `;
-    }
+  document.getElementById('goal').textContent = '🏃 ' + d.goal;
+  document.getElementById('goalSub').textContent =
+    `${d.distance_km} km · Target: ${d.target} · Race ${d.race_date}`;
+  document.getElementById('cdDays').textContent = d.days_to_race;
+  document.getElementById('cdWeek').textContent = `${d.current_week}/${d.total_weeks}`;
+  document.getElementById('cdProgress').textContent =
+    Math.round(d.current_week / d.total_weeks * 100) + '%';
 
-    function copyCode() {
-        const code = document.getElementById('codeBox').innerText.trim();
-        navigator.clipboard.writeText(code).then(() => {
-            document.getElementById('copiedMsg').style.display = 'block';
-            document.querySelector('.copy-btn').textContent = '✅ Copied!';
-        }).catch(() => {
-            // Fallback: select the text
-            const range = document.createRange();
-            range.selectNode(document.getElementById('codeBox'));
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-        });
-    }
+  const s = d.summary;
+  document.getElementById('mTotal').textContent = s.total_km_run;
+  document.getElementById('mLongest').textContent = s.longest_run_km;
+  document.getElementById('mThisWeek').textContent =
+    (s.this_week_actual ?? 0) + ' / ' + (s.this_week_target ?? '–');
+  document.getElementById('mRuns').textContent = s.num_runs;
+
+  const labels = d.weeks.map(w => 'W' + w.week);
+
+  // Weekly volume: actual bars + target line
+  new Chart(document.getElementById('volChart'), {
+    data: {
+      labels,
+      datasets: [
+        { type: 'bar', label: 'Actual km', data: d.weeks.map(w => w.actual_total),
+          backgroundColor: '#FF7043', borderRadius: 4 },
+        { type: 'line', label: 'Plan target', data: d.weeks.map(w => w.target_total),
+          borderColor: '#1a1a2e', borderDash: [5,4], tension: .3, pointRadius: 0 }
+      ]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } },
+               scales: { y: { beginAtZero: true, title: { display: true, text: 'km' } } } }
+  });
+
+  // Long run progression: target line + actual points
+  new Chart(document.getElementById('longChart'), {
+    data: {
+      labels,
+      datasets: [
+        { type: 'line', label: 'Target long run', data: d.weeks.map(w => w.target_long),
+          borderColor: '#E64A19', tension: .3, pointRadius: 2, fill: false },
+        { type: 'line', label: 'Actual longest', data: d.weeks.map(w => w.actual_long || null),
+          borderColor: '#1565c0', backgroundColor: '#1565c0', pointRadius: 4, showLine: false }
+      ]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } },
+               scales: { y: { beginAtZero: true, title: { display: true, text: 'km' } } } }
+  });
+
+  // Recent runs table
+  const rw = document.getElementById('recentWrap');
+  if (!d.recent_runs.length) {
+    rw.innerHTML = '<div class="empty">No runs logged yet — your first run will appear here after the next sync.</div>';
+  } else {
+    rw.innerHTML = '<table><tr><th>Date</th><th>Type</th><th>Dist</th><th>Time</th><th>Pace</th><th>HR</th></tr>' +
+      d.recent_runs.map(r => `<tr>
+        <td>${r.date}</td><td>${r.type}</td>
+        <td>${r.distance_km ?? '–'} km</td>
+        <td>${r.duration_min ?? '–'} min</td>
+        <td>${r.pace ?? '–'}</td>
+        <td>${r.avg_hr ?? '–'}</td></tr>`).join('') + '</table>';
+  }
+
+  // Full plan table
+  document.getElementById('planWrap').innerHTML =
+    '<table><tr><th>Wk</th><th>Phase</th><th>Dates</th><th>Target</th><th>Long</th><th>Actual</th><th></th></tr>' +
+    d.weeks.map(w => `<tr>
+      <td><b>${w.week}</b></td>
+      <td class="phase-${w.phase}">${w.phase}</td>
+      <td>${w.start.slice(5)} → ${w.end.slice(5)}</td>
+      <td>${w.target_total} km</td>
+      <td>${w.target_long} km</td>
+      <td>${w.actual_total || '–'} km</td>
+      <td><span class="pill s-${w.state}">${w.state}</span></td></tr>`).join('') + '</table>';
+
+  document.getElementById('foot').textContent =
+    `Updated ${d.generated_at} · data from Samsung Health → Health Connect → Google Drive`;
+}
+load().catch(e => { document.getElementById('goal').textContent = '⚠️ Failed to load data'; console.error(e); });
 </script>
 </body>
 </html>
