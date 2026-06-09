@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-09 22:57",
+  "generated_at": "2026-06-09 23:04",
   "goal": "BBBRUN26 Half Marathon",
   "distance_km": 21.1,
   "target": "Complete",
@@ -12,8 +12,10 @@
     "total_km_run": 3.0,
     "longest_run_km": 3.0,
     "num_runs": 1,
+    "num_activities": 3,
     "this_week_target": 8,
-    "this_week_actual": 0.0
+    "this_week_run_km": 0,
+    "this_week_sessions": 1
   },
   "weeks": [
     {
@@ -237,14 +239,48 @@
       "state": "upcoming"
     }
   ],
-  "recent_runs": [
+  "recent_activities": [
+    {
+      "date": "2026-06-08",
+      "type": "workout",
+      "distance_km": null,
+      "duration_min": 32.1,
+      "pace": null,
+      "avg_hr": 136,
+      "max_hr": 166,
+      "calories": null
+    },
     {
       "date": "2026-06-07",
       "type": "run",
       "distance_km": 2.96,
       "duration_min": 20.2,
       "pace": "6:48",
-      "avg_hr": 176
+      "avg_hr": 176,
+      "max_hr": 191,
+      "calories": null
+    },
+    {
+      "date": "2026-04-28",
+      "type": "yoga",
+      "distance_km": null,
+      "duration_min": 7.1,
+      "pace": null,
+      "avg_hr": null,
+      "max_hr": null,
+      "calories": null
+    }
+  ],
+  "recovery": [
+    {
+      "date": "2026-06-09",
+      "steps": 552,
+      "sleep_h": null
+    },
+    {
+      "date": "2026-06-08",
+      "steps": 4888,
+      "sleep_h": null
     }
   ],
   "events": [

@@ -9,6 +9,7 @@
   :root {
     --orange: #E64A19; --orange-light: #FF7043; --bg: #f4f5f7;
     --card: #fff; --text: #1a1a2e; --muted: #6b7280; --green: #2e7d32;
+    --blue: #1565c0; --purple: #6a1b9a;
     --done: #c8e6c9; --current: #fff3e0; --upcoming: #f0f0f0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,6 +17,8 @@
          background: var(--bg); color: var(--text); padding: 16px; max-width: 980px; margin: 0 auto; }
   h1 { font-size: 24px; margin-bottom: 4px; }
   .sub { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+
+  /* Hero */
   .hero { background: linear-gradient(135deg, var(--orange), var(--orange-light));
           color: #fff; border-radius: 16px; padding: 24px; margin-bottom: 16px; }
   .hero h1 { font-size: 26px; }
@@ -24,36 +27,69 @@
   .countdown div { text-align: center; }
   .countdown .num { font-size: 32px; font-weight: 700; line-height: 1; }
   .countdown .lbl { font-size: 12px; opacity: .9; text-transform: uppercase; letter-spacing: .5px; }
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .races { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .race-chip { background: rgba(255,255,255,.18); border-radius: 20px; padding: 5px 14px;
+               font-size: 13px; display: flex; align-items: center; gap: 6px; }
+  .race-chip.next { background: rgba(255,255,255,.32); font-weight: 600; }
+  .race-chip .badge { background: #fff; color: var(--orange); border-radius: 10px;
+                      padding: 1px 7px; font-size: 11px; font-weight: 700; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
   .card { background: var(--card); border-radius: 14px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-  .card .v { font-size: 28px; font-weight: 700; color: var(--orange); }
+  .card .v { font-size: 26px; font-weight: 700; color: var(--orange); }
   .card .l { font-size: 13px; color: var(--muted); margin-top: 4px; }
-  .panel { background: var(--card); border-radius: 14px; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+
+  /* Recovery strip */
+  .recovery-strip { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .rec-chip { background: var(--card); border-radius: 12px; padding: 10px 16px;
+              box-shadow: 0 1px 3px rgba(0,0,0,.06); display: flex; align-items: center; gap: 8px; }
+  .rec-chip .ri { font-size: 20px; }
+  .rec-chip .rv { font-size: 16px; font-weight: 700; }
+  .rec-chip .rl { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* Panels */
+  .panel { background: var(--card); border-radius: 14px; padding: 18px; margin-bottom: 16px;
+           box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .panel h2 { font-size: 16px; margin-bottom: 14px; }
+
+  /* Tables */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #eee; }
   th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; }
+  tr:last-child td { border-bottom: none; }
   .pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
   .s-done { background: var(--done); color: var(--green); }
   .s-current { background: var(--current); color: var(--orange); }
   .s-upcoming { background: var(--upcoming); color: var(--muted); }
+
+  /* Activity type badges */
+  .type-badge { display: inline-flex; align-items: center; gap: 4px;
+                background: #f0f0f0; border-radius: 8px; padding: 2px 8px; font-size: 12px; }
+  .type-run    { background: #fff3e0; color: var(--orange); }
+  .type-walk   { background: #e8f5e9; color: var(--green); }
+  .type-workout{ background: #fce4ec; color: #c62828; }
+  .type-yoga   { background: #ede7f6; color: var(--purple); }
+  .type-biking { background: #e3f2fd; color: var(--blue); }
+
   .empty { color: var(--muted); font-style: italic; padding: 12px 0; }
   canvas { max-height: 280px; }
   .foot { text-align: center; color: var(--muted); font-size: 12px; margin: 20px 0; }
-  .phase-Base{color:#1565c0} .phase-Endurance{color:#6a1b9a}
-  .phase-Specific{color:#c62828} .phase-Taper{color:#2e7d32} .phase-Race{color:var(--orange);font-weight:700}
-  .phase-10kPrep{color:#e65100} .phase-10kRace{color:var(--orange);font-weight:700}
-  .phase-HalfBuild{color:#c62828}
-  .races { display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
-  .race-chip { background:rgba(255,255,255,.18); border-radius:20px; padding:5px 14px;
-               font-size:13px; display:flex; align-items:center; gap:6px; }
-  .race-chip.next { background:rgba(255,255,255,.32); font-weight:600; }
-  .race-chip .badge { background:#fff; color:var(--orange); border-radius:10px;
-                      padding:1px 7px; font-size:11px; font-weight:700; }
+
+  /* Phase colours */
+  .phase-Base      { color: var(--blue); }
+  .phase-Endurance { color: var(--purple); }
+  .phase-Specific  { color: #c62828; }
+  .phase-10kPrep   { color: #e65100; }
+  .phase-10kRace   { color: var(--orange); font-weight: 700; }
+  .phase-HalfBuild { color: #c62828; }
+  .phase-Taper     { color: var(--green); }
+  .phase-Race      { color: var(--orange); font-weight: 700; }
 </style>
 </head>
 <body>
 
+<!-- Hero -->
 <div class="hero">
   <h1 id="goal">🏃 Loading…</h1>
   <div class="goal" id="goalSub"></div>
@@ -65,28 +101,41 @@
   <div class="races" id="racesRow"></div>
 </div>
 
+<!-- Summary cards -->
 <div class="cards">
   <div class="card"><div class="v" id="mTotal">–</div><div class="l">Total km run</div></div>
   <div class="card"><div class="v" id="mLongest">–</div><div class="l">Longest run (km)</div></div>
   <div class="card"><div class="v" id="mThisWeek">–</div><div class="l">This week (km / target)</div></div>
-  <div class="card"><div class="v" id="mRuns">–</div><div class="l">Runs logged</div></div>
+  <div class="card"><div class="v" id="mSessions">–</div><div class="l">Sessions this week</div></div>
+  <div class="card"><div class="v" id="mActivities">–</div><div class="l">Total activities</div></div>
 </div>
 
+<!-- Recovery strip -->
+<div class="recovery-strip" id="recoveryStrip"></div>
+
+<!-- Charts -->
 <div class="panel">
-  <h2>Weekly volume — actual vs plan</h2>
+  <h2>Weekly running volume — actual vs plan</h2>
   <canvas id="volChart"></canvas>
 </div>
-
 <div class="panel">
   <h2>Long run progression</h2>
   <canvas id="longChart"></canvas>
 </div>
 
+<!-- All activities -->
 <div class="panel">
-  <h2>Recent runs</h2>
-  <div id="recentWrap"></div>
+  <h2>Recent activities</h2>
+  <div id="actWrap"></div>
 </div>
 
+<!-- Recovery table -->
+<div class="panel" id="recoveryPanel" style="display:none">
+  <h2>Daily recovery (steps &amp; sleep)</h2>
+  <div id="recoveryWrap"></div>
+</div>
+
+<!-- Full plan -->
 <div class="panel">
   <h2>Full training plan</h2>
   <div id="planWrap"></div>
@@ -95,52 +144,78 @@
 <div class="foot" id="foot"></div>
 
 <script>
+const TYPE_ICON = {
+  run: '🏃', walk: '🚶', workout: '💪', yoga: '🧘', biking: '🚴'
+};
+function typeIcon(t) { return TYPE_ICON[t] || '⚡'; }
+function typeBadge(t) {
+  return `<span class="type-badge type-${t}">${typeIcon(t)} ${t}</span>`;
+}
+
 async function load() {
-  // cache-bust so the dashboard always shows the freshest data
   const res = await fetch('data.json?t=' + Date.now());
   const d = await res.json();
 
+  // Hero
   document.getElementById('goal').textContent = '🏃 ' + d.goal;
-  document.getElementById('goalSub').textContent =
-    `${d.distance_km} km · Target: ${d.target}`;
+  document.getElementById('goalSub').textContent = `${d.distance_km} km · Target: ${d.target}`;
   document.getElementById('cdWeek').textContent = `${d.current_week}/${d.total_weeks}`;
-  document.getElementById('cdProgress').textContent =
-    Math.round(d.current_week / d.total_weeks * 100) + '%';
+  document.getElementById('cdProgress').textContent = Math.round(d.current_week / d.total_weeks * 100) + '%';
 
-  // Next event countdown
   const ne = d.next_event;
   if (ne) {
     document.getElementById('cdDays').textContent = Math.max(0, ne.days_to_event);
-    document.getElementById('cdDaysLbl').textContent =
-      `days to ${ne.distance_km < 21 ? '10km' : 'half'}`;
+    document.getElementById('cdDaysLbl').textContent = `days to ${ne.distance_km < 21 ? '10km' : 'half'}`;
   } else {
     document.getElementById('cdDays').textContent = d.days_to_race;
   }
 
-  // Race chips row
+  // Race chips
   const racesRow = document.getElementById('racesRow');
   (d.events || []).forEach(ev => {
     const isNext = d.next_event && ev.date === d.next_event.date;
     const past = ev.days_to_event < 0;
     const icon = ev.distance_km < 21 ? '🏁' : '🏆';
     const chip = document.createElement('div');
-    chip.className = 'race-chip' + (isNext ? ' next' : '') + (past ? ' past' : '');
+    chip.className = 'race-chip' + (isNext ? ' next' : '');
     chip.innerHTML = `${icon} ${ev.name}` +
       (isNext ? ` <span class="badge">${ev.days_to_event}d</span>` :
-       past ? ` <span class="badge">done</span>` : ` · ${ev.date}`);
+       past    ? ` <span class="badge">done</span>` : ` · ${ev.date}`);
     racesRow.appendChild(chip);
   });
 
+  // Summary cards
   const s = d.summary;
   document.getElementById('mTotal').textContent = s.total_km_run;
   document.getElementById('mLongest').textContent = s.longest_run_km;
-  document.getElementById('mThisWeek').textContent =
-    (s.this_week_actual ?? 0) + ' / ' + (s.this_week_target ?? '–');
-  document.getElementById('mRuns').textContent = s.num_runs;
+  document.getElementById('mThisWeek').textContent = (s.this_week_run_km ?? 0) + ' / ' + (s.this_week_target ?? '–');
+  document.getElementById('mSessions').textContent = `${s.this_week_sessions} / ${d.current_week <= d.total_weeks ? 3 : '–'}`;
+  document.getElementById('mActivities').textContent = s.num_activities;
+
+  // Recovery strip — most recent day
+  const strip = document.getElementById('recoveryStrip');
+  if (d.recovery && d.recovery.length) {
+    const latest = d.recovery[0];
+    if (latest.steps != null) {
+      strip.innerHTML += `<div class="rec-chip"><span class="ri">👟</span>
+        <div><div class="rv">${latest.steps.toLocaleString()}</div><div class="rl">steps today (${latest.date})</div></div></div>`;
+    }
+    if (latest.sleep_h != null) {
+      strip.innerHTML += `<div class="rec-chip"><span class="ri">😴</span>
+        <div><div class="rv">${latest.sleep_h}h</div><div class="rl">sleep last night</div></div></div>`;
+    }
+    // 7-day step average
+    const withSteps = d.recovery.filter(r => r.steps != null);
+    if (withSteps.length > 1) {
+      const avg = Math.round(withSteps.reduce((s, r) => s + r.steps, 0) / withSteps.length);
+      strip.innerHTML += `<div class="rec-chip"><span class="ri">📈</span>
+        <div><div class="rv">${avg.toLocaleString()}</div><div class="rl">${withSteps.length}-day avg steps</div></div></div>`;
+    }
+  }
 
   const labels = d.weeks.map(w => 'W' + w.week);
 
-  // Weekly volume: actual bars + target line
+  // Weekly volume chart
   new Chart(document.getElementById('volChart'), {
     data: {
       labels,
@@ -155,7 +230,7 @@ async function load() {
                scales: { y: { beginAtZero: true, title: { display: true, text: 'km' } } } }
   });
 
-  // Long run progression: target line + actual points
+  // Long run progression chart
   new Chart(document.getElementById('longChart'), {
     data: {
       labels,
@@ -170,36 +245,60 @@ async function load() {
                scales: { y: { beginAtZero: true, title: { display: true, text: 'km' } } } }
   });
 
-  // Recent runs table
-  const rw = document.getElementById('recentWrap');
-  if (!d.recent_runs.length) {
-    rw.innerHTML = '<div class="empty">No runs logged yet — your first run will appear here after the next sync.</div>';
+  // Recent activities
+  const aw = document.getElementById('actWrap');
+  if (!d.recent_activities || !d.recent_activities.length) {
+    aw.innerHTML = '<div class="empty">No activities yet — they will appear here after the next sync.</div>';
   } else {
-    rw.innerHTML = '<table><tr><th>Date</th><th>Type</th><th>Dist</th><th>Time</th><th>Pace</th><th>HR</th></tr>' +
-      d.recent_runs.map(r => `<tr>
-        <td>${r.date}</td><td>${r.type}</td>
-        <td>${r.distance_km ?? '–'} km</td>
-        <td>${r.duration_min ?? '–'} min</td>
-        <td>${r.pace ?? '–'}</td>
-        <td>${r.avg_hr ?? '–'}</td></tr>`).join('') + '</table>';
+    aw.innerHTML = `<table>
+      <tr><th>Date</th><th>Type</th><th>Dist</th><th>Time</th><th>Pace</th><th>Avg HR</th><th>Max HR</th></tr>
+      ${d.recent_activities.map(a => `<tr>
+        <td>${a.date}</td>
+        <td>${typeBadge(a.type)}</td>
+        <td>${a.distance_km != null ? a.distance_km + ' km' : '–'}</td>
+        <td>${a.duration_min != null ? a.duration_min + ' min' : '–'}</td>
+        <td>${a.pace ?? '–'}</td>
+        <td>${a.avg_hr ?? '–'}</td>
+        <td>${a.max_hr ?? '–'}</td>
+      </tr>`).join('')}
+    </table>`;
+  }
+
+  // Recovery table
+  if (d.recovery && d.recovery.length) {
+    document.getElementById('recoveryPanel').style.display = '';
+    document.getElementById('recoveryWrap').innerHTML = `<table>
+      <tr><th>Date</th><th>Steps</th><th>Sleep</th></tr>
+      ${d.recovery.map(r => `<tr>
+        <td>${r.date}</td>
+        <td>${r.steps != null ? r.steps.toLocaleString() : '–'}</td>
+        <td>${r.sleep_h != null ? r.sleep_h + 'h' : '–'}</td>
+      </tr>`).join('')}
+    </table>`;
   }
 
   // Full plan table
-  document.getElementById('planWrap').innerHTML =
-    '<table><tr><th>Wk</th><th>Phase</th><th>Dates</th><th>Target</th><th>Long</th><th>Actual</th><th></th></tr>' +
-    d.weeks.map(w => `<tr>
+  document.getElementById('planWrap').innerHTML = `<table>
+    <tr><th>Wk</th><th>Phase</th><th>Dates</th><th>Target</th><th>Long</th><th>Actual</th><th></th></tr>
+    ${d.weeks.map(w => `<tr>
       <td><b>${w.week}</b></td>
       <td class="phase-${w.phase.replace(/[\s-]/g,'')}">${w.phase}</td>
       <td>${w.start.slice(5)} → ${w.end.slice(5)}</td>
       <td>${w.target_total} km</td>
       <td>${w.target_long} km</td>
       <td>${w.actual_total || '–'} km</td>
-      <td><span class="pill s-${w.state}">${w.state}</span></td></tr>`).join('') + '</table>';
+      <td><span class="pill s-${w.state}">${w.state}</span></td>
+    </tr>`).join('')}
+  </table>`;
 
   document.getElementById('foot').textContent =
     `Updated ${d.generated_at} · data from Samsung Health → Health Connect → Google Drive`;
 }
-load().catch(e => { document.getElementById('goal').textContent = '⚠️ Failed to load data'; console.error(e); });
+
+load().catch(e => {
+  document.getElementById('goal').textContent = '⚠️ Failed to load data';
+  console.error(e);
+});
 </script>
 </body>
 </html>
