@@ -107,9 +107,9 @@ def main():
             "state": "done" if is_done else ("current" if is_current else "upcoming"),
         })
 
-    # Summary stats
-    total_km = round(sum(actual_total.values()), 1)
-    longest = round(max(actual_long.values()), 1) if runs else 0
+    # Summary stats — count ALL runs (incl. pre-plan), weekly breakdown is plan-bounded
+    total_km = round(sum(r["distance_km"] for r in runs), 1)
+    longest = round(max((r["distance_km"] for r in runs), default=0), 1)
     days_to_race = (race - today).days
     this_week = next((w for w in weeks_out if w["state"] == "current"), None)
 

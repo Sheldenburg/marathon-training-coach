@@ -34,10 +34,12 @@ DB_PATH = Path(__file__).resolve().parent.parent / "data" / "latest.db"
 # We lean on the session `title` first (Samsung Health writes readable titles);
 # this is only a fallback. Refine as real activities appear.
 EXERCISE_TYPES = {
-    56: "run",
-    57: "yoga",            # confirmed from a "5-Min Yoga" session in the export
-    79: "walk",
+    4:  "run",             # Samsung Health running (confirmed: distance + 6:48/km pace)
     8:  "biking",
+    56: "run",             # Health Connect standard RUNNING
+    57: "yoga",            # confirmed from a "5-Min Yoga" session in the export
+    60: "workout",         # Samsung Health indoor workout (no GPS distance, HR 83-166)
+    79: "walk",
 }
 
 SLEEP_STAGES = {

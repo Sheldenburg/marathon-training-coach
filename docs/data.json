@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-09 06:40",
+  "generated_at": "2026-06-09 22:57",
   "goal": "BBBRUN26 Half Marathon",
   "distance_km": 21.1,
   "target": "Complete",
@@ -9,9 +9,9 @@
   "current_week": 1,
   "total_weeks": 20,
   "summary": {
-    "total_km_run": 0.0,
-    "longest_run_km": 0,
-    "num_runs": 0,
+    "total_km_run": 3.0,
+    "longest_run_km": 3.0,
+    "num_runs": 1,
     "this_week_target": 8,
     "this_week_actual": 0.0
   },
@@ -237,7 +237,16 @@
       "state": "upcoming"
     }
   ],
-  "recent_runs": [],
+  "recent_runs": [
+    {
+      "date": "2026-06-07",
+      "type": "run",
+      "distance_km": 2.96,
+      "duration_min": 20.2,
+      "pace": "6:48",
+      "avg_hr": 176
+    }
+  ],
   "events": [
     {
       "name": "Sydney Running Festival 10km",
@@ -265,10 +274,10 @@
     "plan_week": 14
   },
   "data_status": {
-    "exercise_sessions": 1,
-    "steps_records": 5,
-    "distance_records": 0,
-    "heart_rate_records": 0,
+    "exercise_sessions": 3,
+    "steps_records": 33,
+    "distance_records": 1,
+    "heart_rate_records": 33,
     "sleep_sessions": 0,
     "weight_records": 0
   }
