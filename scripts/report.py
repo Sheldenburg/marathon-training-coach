@@ -36,6 +36,7 @@ DB_PATH = Path(__file__).resolve().parent.parent / "data" / "latest.db"
 EXERCISE_TYPES = {
     4:  "run",             # Samsung Health running (confirmed: distance + 6:48/km pace)
     8:  "biking",
+    33: "run",             # Samsung Health running variant (confirmed: 3.75km @ 7:34/km)
     56: "run",             # Health Connect standard RUNNING
     57: "yoga",            # confirmed from a "5-Min Yoga" session in the export
     60: "workout",         # Samsung Health indoor workout (no GPS distance, HR 83-166)
