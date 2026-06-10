@@ -30,8 +30,76 @@ PLAN = ROOT / "plan.json"
 OUT = ROOT / "docs" / "data.json"
 
 
+WEEK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+
 def parse_date(s):
     return datetime.strptime(s, "%Y-%m-%d").date()
+
+
+def generate_weekly_schedule(phase, week_start, activities_this_week):
+    """
+    Return a 7-entry list (Mon–Sun) combining the planned session type
+    with any activities actually logged on that day.
+    """
+    # Phase-sensitive strength detail
+    if phase in ('Taper', 'Race'):
+        s1 = {'type': 'mobility', 'label': 'Mobility / Yoga',
+              'detail': 'Light stretching only — no heavy lifting during taper'}
+        s2 = {'type': 'rest',     'label': 'Rest',
+              'detail': 'Keep legs completely fresh this week'}
+    elif phase in ('10k Race', 'Half Build'):
+        s1 = {'type': 'strength', 'label': 'Strength A',
+              'detail': 'KB swings 3×15 · goblet squat 3×10 · single-leg RDL 3×8'}
+        s2 = {'type': 'strength', 'label': 'Strength B',
+              'detail': 'Step-ups 3×10 · hip thrust 3×12 · band clamshells 3×15'}
+    else:  # Base, Endurance, 10k Prep
+        s1 = {'type': 'strength', 'label': 'Strength A',
+              'detail': 'Band activation 10 min · KB swings 3×15 · goblet squat 3×10'}
+        s2 = {'type': 'strength', 'label': 'Strength B',
+              'detail': 'Reverse lunge 3×10 · step-ups 3×10 · DB row 3×12'}
+
+    template = [
+        {'type': 'cross',       'label': 'Cross trainer / Rest',
+         'detail': '20–30 min easy cross trainer (RPE 4/10) or full rest'},
+        {'type': 'run-easy',    'label': 'Easy run',
+         'detail': 'Conversational pace — full sentences, no gasping'},
+        s1,
+        {'type': 'run-quality', 'label': 'Quality run',
+         'detail': "This week's interval or tempo session"},
+        {'type': 'cross',       'label': 'Cross trainer',
+         'detail': '30 min aerobic at easy effort — active recovery'},
+        s2,
+        {'type': 'run-long',    'label': 'Long run',
+         'detail': 'Slow and steady — walk breaks welcome'},
+    ]
+
+    acts_by_date = {}
+    for a in activities_this_week:
+        acts_by_date.setdefault(a['date'], []).append(a)
+
+    today = date.today()
+    schedule = []
+    for i, (day_name, tmpl) in enumerate(zip(WEEK_DAYS, template)):
+        day_date = week_start + timedelta(days=i)
+        day_acts = acts_by_date.get(day_date.isoformat(), [])
+        schedule.append({
+            'day': day_name,
+            'date': day_date.isoformat(),
+            'is_today': day_date == today,
+            'is_past': day_date < today,
+            **tmpl,
+            'logged': [
+                {
+                    'type': a['type'],
+                    'distance_km': a.get('distance_km'),
+                    'duration_min': a.get('duration_min'),
+                    'avg_hr': a.get('avg_hr_bpm'),
+                }
+                for a in day_acts
+            ],
+        })
+    return schedule
 
 
 def main():
@@ -127,6 +195,10 @@ def main():
     days_to_race = (race - today).days
     this_week_plan = next((w for w in weeks_out if w["state"] == "current"), None)
 
+    # This week's full schedule (Mon–Sun)
+    current_phase = plan["weeks"][current_week - 1]["phase"] if current_week <= len(plan["weeks"]) else "Base"
+    this_week_schedule = generate_weekly_schedule(current_phase, wk_start_cur, this_week_acts)
+
     # Recent activities — ALL types, last 15, newest first
     recent_activities = [
         {
@@ -173,6 +245,7 @@ def main():
             "this_week_sessions": this_week_sessions,
         },
         "weeks": weeks_out,
+        "this_week_schedule": this_week_schedule,
         "recent_activities": recent_activities,
         "recovery": recovery,
         "events": events_out,

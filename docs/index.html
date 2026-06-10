@@ -15,13 +15,11 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
          background: var(--bg); color: var(--text); padding: 16px; max-width: 980px; margin: 0 auto; }
-  h1 { font-size: 24px; margin-bottom: 4px; }
-  .sub { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
 
   /* Hero */
   .hero { background: linear-gradient(135deg, var(--orange), var(--orange-light));
           color: #fff; border-radius: 16px; padding: 24px; margin-bottom: 16px; }
-  .hero h1 { font-size: 26px; }
+  .hero h1 { font-size: 26px; font-weight: 700; }
   .hero .goal { font-size: 15px; opacity: .95; margin-top: 4px; }
   .countdown { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
   .countdown div { text-align: center; }
@@ -34,9 +32,11 @@
   .race-chip .badge { background: #fff; color: var(--orange); border-radius: 10px;
                       padding: 1px 7px; font-size: 11px; font-weight: 700; }
 
-  /* Cards */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
-  .card { background: var(--card); border-radius: 14px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  /* Summary cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+           gap: 12px; margin-bottom: 16px; }
+  .card { background: var(--card); border-radius: 14px; padding: 18px;
+          box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .card .v { font-size: 26px; font-weight: 700; color: var(--orange); }
   .card .l { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
@@ -49,29 +49,56 @@
   .rec-chip .rl { font-size: 11px; color: var(--muted); margin-top: 1px; }
 
   /* Panels */
-  .panel { background: var(--card); border-radius: 14px; padding: 18px; margin-bottom: 16px;
-           box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .panel { background: var(--card); border-radius: 14px; padding: 18px;
+           margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .panel h2 { font-size: 16px; margin-bottom: 14px; }
+
+  /* Weekly schedule */
+  .schedule-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  @media (max-width: 680px) { .schedule-grid { grid-template-columns: 1fr; gap: 6px; } }
+  .sday { border-radius: 12px; padding: 10px 12px; background: #fafafa;
+          border: 2px solid transparent; position: relative; }
+  .sday.today { border-color: var(--orange); background: #fff8f5; }
+  .sday.done  { background: #f0fff4; }
+  .sday.past:not(.done) { opacity: .55; }
+  .sday-name { font-size: 11px; font-weight: 700; text-transform: uppercase;
+               letter-spacing: .5px; color: var(--muted); }
+  .sday-date { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .sday-icon { font-size: 20px; margin-bottom: 4px; }
+  .sday-label { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .sday-detail { font-size: 11px; color: var(--muted); line-height: 1.4; }
+  .sday-logged { margin-top: 6px; padding-top: 6px; border-top: 1px solid #eee; }
+  .sday-logged-item { font-size: 11px; color: var(--green); font-weight: 600; }
+  .today-badge { position: absolute; top: 8px; right: 8px; background: var(--orange);
+                 color: #fff; border-radius: 8px; font-size: 10px; padding: 1px 6px; font-weight: 700; }
+
+  /* Activity type colours */
+  .type-badge { display: inline-flex; align-items: center; gap: 4px;
+                background: #f0f0f0; border-radius: 8px; padding: 2px 8px; font-size: 12px; }
+  .type-run     { background: #fff3e0; color: var(--orange); }
+  .type-walk    { background: #e8f5e9; color: var(--green); }
+  .type-workout { background: #fce4ec; color: #c62828; }
+  .type-yoga    { background: #ede7f6; color: var(--purple); }
+  .type-biking  { background: #e3f2fd; color: var(--blue); }
+
+  /* Equipment guide */
+  .equip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .equip-card { border-radius: 12px; padding: 14px; background: #fafafa; border-left: 4px solid var(--orange); }
+  .equip-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .equip-card ul { padding-left: 16px; font-size: 13px; color: var(--muted); line-height: 1.8; }
+  .equip-card ul li strong { color: var(--text); }
+  .equip-note { font-size: 12px; color: var(--muted); margin-top: 10px; font-style: italic; }
 
   /* Tables */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #eee; }
   th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; }
   tr:last-child td { border-bottom: none; }
-  .pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-  .s-done { background: var(--done); color: var(--green); }
-  .s-current { background: var(--current); color: var(--orange); }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 20px;
+          font-size: 11px; font-weight: 600; }
+  .s-done     { background: var(--done); color: var(--green); }
+  .s-current  { background: var(--current); color: var(--orange); }
   .s-upcoming { background: var(--upcoming); color: var(--muted); }
-
-  /* Activity type badges */
-  .type-badge { display: inline-flex; align-items: center; gap: 4px;
-                background: #f0f0f0; border-radius: 8px; padding: 2px 8px; font-size: 12px; }
-  .type-run    { background: #fff3e0; color: var(--orange); }
-  .type-walk   { background: #e8f5e9; color: var(--green); }
-  .type-workout{ background: #fce4ec; color: #c62828; }
-  .type-yoga   { background: #ede7f6; color: var(--purple); }
-  .type-biking { background: #e3f2fd; color: var(--blue); }
-
   .empty { color: var(--muted); font-style: italic; padding: 12px 0; }
   canvas { max-height: 280px; }
   .foot { text-align: center; color: var(--muted); font-size: 12px; margin: 20px 0; }
@@ -113,6 +140,12 @@
 <!-- Recovery strip -->
 <div class="recovery-strip" id="recoveryStrip"></div>
 
+<!-- This week's schedule -->
+<div class="panel">
+  <h2>📅 This week's schedule</h2>
+  <div class="schedule-grid" id="schedGrid"></div>
+</div>
+
 <!-- Charts -->
 <div class="panel">
   <h2>Weekly running volume — actual vs plan</h2>
@@ -135,6 +168,68 @@
   <div id="recoveryWrap"></div>
 </div>
 
+<!-- Cross-training guide -->
+<div class="panel">
+  <h2>🏋️ Cross-training guide</h2>
+  <div class="equip-grid">
+
+    <div class="equip-card" style="border-color:#6a1b9a">
+      <h3>🔄 Cross trainer — Mon &amp; Fri</h3>
+      <ul>
+        <li><strong>Easy aerobic:</strong> 20–30 min, RPE 4/10 (could sing)</li>
+        <li><strong>Why:</strong> Same cardio as running, zero impact on joints</li>
+        <li><strong>Swap rule:</strong> If you miss a run day, 45 min cross trainer replaces it</li>
+        <li><strong>Progression:</strong> Add 5 min every 2 weeks as you build fitness</li>
+      </ul>
+    </div>
+
+    <div class="equip-card" style="border-color:#1565c0">
+      <h3>🪢 Resistance bands — before every run</h3>
+      <ul>
+        <li><strong>Clamshells:</strong> 3 × 15 each side</li>
+        <li><strong>Lateral walks:</strong> 3 × 20 steps each way</li>
+        <li><strong>Monster walks:</strong> 3 × 15 steps fwd/back</li>
+        <li><strong>Hip circle squat:</strong> 2 × 10</li>
+      </ul>
+      <div class="equip-note">5–10 min pre-run. Activates glutes — #1 injury prevention for new runners.</div>
+    </div>
+
+    <div class="equip-card" style="border-color:#E64A19">
+      <h3>🔔 Kettlebell — Wed &amp; Sat (Strength A)</h3>
+      <ul>
+        <li><strong>Start with:</strong> 12–16 kg</li>
+        <li><strong>KB swings:</strong> 3 × 15 (posterior chain king)</li>
+        <li><strong>Goblet squat:</strong> 3 × 10</li>
+        <li><strong>KB deadlift:</strong> 3 × 10</li>
+        <li><strong>Single-leg RDL:</strong> 3 × 8 each leg</li>
+      </ul>
+      <div class="equip-note">Rest 60–90 s between sets. Done in ~25 min.</div>
+    </div>
+
+    <div class="equip-card" style="border-color:#2e7d32">
+      <h3>🏋️ Dumbbells — Sat (Strength B)</h3>
+      <ul>
+        <li><strong>Start with:</strong> 8–12 kg pair</li>
+        <li><strong>Reverse lunge:</strong> 3 × 10 each leg</li>
+        <li><strong>Step-ups:</strong> 3 × 10 each leg (use a chair)</li>
+        <li><strong>Hip thrust:</strong> 3 × 12 (bodyweight ok to start)</li>
+        <li><strong>Bent-over row:</strong> 3 × 12 (for posture)</li>
+      </ul>
+      <div class="equip-note">Alternate A/B each Saturday to hit all muscle groups weekly.</div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:16px; padding:14px; background:#fff3e0; border-radius:10px; font-size:13px;">
+    <strong>📌 Which to buy first?</strong>
+    If you only buy one thing: a <strong>16 kg kettlebell</strong> — KB swings alone will transform your running strength.
+    Bands are second (cheap and essential for warm-up). Dumbbells third if you want the full B session.
+    <br><br>
+    <strong>⚠️ Load rule:</strong> Strength sessions reduce to 1×/week in the 10k Prep and Half Build phases,
+    and drop to mobility-only during Taper. The schedule above updates automatically each week.
+  </div>
+</div>
+
 <!-- Full plan -->
 <div class="panel">
   <h2>Full training plan</h2>
@@ -144,13 +239,18 @@
 <div class="foot" id="foot"></div>
 
 <script>
-const TYPE_ICON = {
-  run: '🏃', walk: '🚶', workout: '💪', yoga: '🧘', biking: '🚴'
-};
+const TYPE_ICON = { run: '🏃', walk: '🚶', workout: '💪', yoga: '🧘', biking: '🚴' };
 function typeIcon(t) { return TYPE_ICON[t] || '⚡'; }
 function typeBadge(t) {
   return `<span class="type-badge type-${t}">${typeIcon(t)} ${t}</span>`;
 }
+
+const SCHED_ICON = {
+  'run-easy': '🏃', 'run-quality': '⚡', 'run-long': '🛤️',
+  'strength': '💪', 'cross': '🔄', 'rest': '😴', 'mobility': '🧘',
+};
+
+function fmt(v, unit) { return v != null ? v + unit : '–'; }
 
 async function load() {
   const res = await fetch('data.json?t=' + Date.now());
@@ -171,17 +271,15 @@ async function load() {
   }
 
   // Race chips
-  const racesRow = document.getElementById('racesRow');
   (d.events || []).forEach(ev => {
     const isNext = d.next_event && ev.date === d.next_event.date;
     const past = ev.days_to_event < 0;
-    const icon = ev.distance_km < 21 ? '🏁' : '🏆';
     const chip = document.createElement('div');
     chip.className = 'race-chip' + (isNext ? ' next' : '');
-    chip.innerHTML = `${icon} ${ev.name}` +
+    chip.innerHTML = `${ev.distance_km < 21 ? '🏁' : '🏆'} ${ev.name}` +
       (isNext ? ` <span class="badge">${ev.days_to_event}d</span>` :
        past    ? ` <span class="badge">done</span>` : ` · ${ev.date}`);
-    racesRow.appendChild(chip);
+    document.getElementById('racesRow').appendChild(chip);
   });
 
   // Summary cards
@@ -189,29 +287,57 @@ async function load() {
   document.getElementById('mTotal').textContent = s.total_km_run;
   document.getElementById('mLongest').textContent = s.longest_run_km;
   document.getElementById('mThisWeek').textContent = (s.this_week_run_km ?? 0) + ' / ' + (s.this_week_target ?? '–');
-  document.getElementById('mSessions').textContent = `${s.this_week_sessions} / ${d.current_week <= d.total_weeks ? 3 : '–'}`;
+  document.getElementById('mSessions').textContent = `${s.this_week_sessions} / 3`;
   document.getElementById('mActivities').textContent = s.num_activities;
 
-  // Recovery strip — most recent day
+  // Recovery strip
   const strip = document.getElementById('recoveryStrip');
   if (d.recovery && d.recovery.length) {
     const latest = d.recovery[0];
-    if (latest.steps != null) {
+    if (latest.steps != null)
       strip.innerHTML += `<div class="rec-chip"><span class="ri">👟</span>
-        <div><div class="rv">${latest.steps.toLocaleString()}</div><div class="rl">steps today (${latest.date})</div></div></div>`;
-    }
-    if (latest.sleep_h != null) {
+        <div><div class="rv">${latest.steps.toLocaleString()}</div>
+        <div class="rl">steps today (${latest.date})</div></div></div>`;
+    if (latest.sleep_h != null)
       strip.innerHTML += `<div class="rec-chip"><span class="ri">😴</span>
-        <div><div class="rv">${latest.sleep_h}h</div><div class="rl">sleep last night</div></div></div>`;
-    }
-    // 7-day step average
+        <div><div class="rv">${latest.sleep_h}h</div>
+        <div class="rl">sleep last night</div></div></div>`;
     const withSteps = d.recovery.filter(r => r.steps != null);
     if (withSteps.length > 1) {
       const avg = Math.round(withSteps.reduce((s, r) => s + r.steps, 0) / withSteps.length);
       strip.innerHTML += `<div class="rec-chip"><span class="ri">📈</span>
-        <div><div class="rv">${avg.toLocaleString()}</div><div class="rl">${withSteps.length}-day avg steps</div></div></div>`;
+        <div><div class="rv">${avg.toLocaleString()}</div>
+        <div class="rl">${withSteps.length}-day avg steps</div></div></div>`;
     }
   }
+
+  // Weekly schedule
+  const grid = document.getElementById('schedGrid');
+  (d.this_week_schedule || []).forEach(day => {
+    const cls = ['sday',
+      day.is_today ? 'today' : '',
+      day.logged.length ? 'done' : '',
+      day.is_past && !day.logged.length ? 'past' : '',
+    ].filter(Boolean).join(' ');
+
+    const loggedHtml = day.logged.map(a => {
+      const parts = [typeIcon(a.type) + ' ' + a.type];
+      if (a.distance_km) parts.push(a.distance_km + ' km');
+      if (a.duration_min) parts.push(a.duration_min + ' min');
+      if (a.avg_hr) parts.push('HR ' + a.avg_hr);
+      return `<div class="sday-logged-item">✅ ${parts.join(' · ')}</div>`;
+    }).join('');
+
+    grid.innerHTML += `<div class="${cls}">
+      ${day.is_today ? '<span class="today-badge">TODAY</span>' : ''}
+      <div class="sday-name">${day.day.slice(0,3)}</div>
+      <div class="sday-date">${day.date.slice(5)}</div>
+      <div class="sday-icon">${SCHED_ICON[day.type] || '📋'}</div>
+      <div class="sday-label">${day.label}</div>
+      <div class="sday-detail">${day.detail}</div>
+      ${loggedHtml ? `<div class="sday-logged">${loggedHtml}</div>` : ''}
+    </div>`;
+  });
 
   const labels = d.weeks.map(w => 'W' + w.week);
 
@@ -220,7 +346,7 @@ async function load() {
     data: {
       labels,
       datasets: [
-        { type: 'bar', label: 'Actual km', data: d.weeks.map(w => w.actual_total),
+        { type: 'bar',  label: 'Actual km',   data: d.weeks.map(w => w.actual_total),
           backgroundColor: '#FF7043', borderRadius: 4 },
         { type: 'line', label: 'Plan target', data: d.weeks.map(w => w.target_total),
           borderColor: '#1a1a2e', borderDash: [5,4], tension: .3, pointRadius: 0 }
@@ -237,7 +363,7 @@ async function load() {
       datasets: [
         { type: 'line', label: 'Target long run', data: d.weeks.map(w => w.target_long),
           borderColor: '#E64A19', tension: .3, pointRadius: 2, fill: false },
-        { type: 'line', label: 'Actual longest', data: d.weeks.map(w => w.actual_long || null),
+        { type: 'line', label: 'Actual longest',  data: d.weeks.map(w => w.actual_long || null),
           borderColor: '#1565c0', backgroundColor: '#1565c0', pointRadius: 4, showLine: false }
       ]
     },

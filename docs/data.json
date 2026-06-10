@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-10 13:13",
+  "generated_at": "2026-06-10 13:17",
   "goal": "BBBRUN26 Half Marathon",
   "distance_km": 21.1,
   "target": "Complete",
@@ -237,6 +237,92 @@
       "actual_total": 0.0,
       "actual_long": 0.0,
       "state": "upcoming"
+    }
+  ],
+  "this_week_schedule": [
+    {
+      "day": "Monday",
+      "date": "2026-06-08",
+      "is_today": false,
+      "is_past": true,
+      "type": "cross",
+      "label": "Cross trainer / Rest",
+      "detail": "20\u201330 min easy cross trainer (RPE 4/10) or full rest",
+      "logged": [
+        {
+          "type": "workout",
+          "distance_km": null,
+          "duration_min": 32.1,
+          "avg_hr": 136
+        }
+      ]
+    },
+    {
+      "day": "Tuesday",
+      "date": "2026-06-09",
+      "is_today": false,
+      "is_past": true,
+      "type": "run-easy",
+      "label": "Easy run",
+      "detail": "Conversational pace \u2014 full sentences, no gasping",
+      "logged": [
+        {
+          "type": "run",
+          "distance_km": 3.75,
+          "duration_min": 28.4,
+          "avg_hr": 164
+        }
+      ]
+    },
+    {
+      "day": "Wednesday",
+      "date": "2026-06-10",
+      "is_today": true,
+      "is_past": false,
+      "type": "strength",
+      "label": "Strength A",
+      "detail": "Band activation 10 min \u00b7 KB swings 3\u00d715 \u00b7 goblet squat 3\u00d710",
+      "logged": []
+    },
+    {
+      "day": "Thursday",
+      "date": "2026-06-11",
+      "is_today": false,
+      "is_past": false,
+      "type": "run-quality",
+      "label": "Quality run",
+      "detail": "This week's interval or tempo session",
+      "logged": []
+    },
+    {
+      "day": "Friday",
+      "date": "2026-06-12",
+      "is_today": false,
+      "is_past": false,
+      "type": "cross",
+      "label": "Cross trainer",
+      "detail": "30 min aerobic at easy effort \u2014 active recovery",
+      "logged": []
+    },
+    {
+      "day": "Saturday",
+      "date": "2026-06-13",
+      "is_today": false,
+      "is_past": false,
+      "type": "strength",
+      "label": "Strength B",
+      "detail": "Reverse lunge 3\u00d710 \u00b7 step-ups 3\u00d710 \u00b7 DB row 3\u00d712",
+      "logged": []
+    },
+    {
+      "day": "Sunday",
+      "date": "2026-06-14",
+      "is_today": false,
+      "is_past": false,
+      "type": "run-long",
+      "label": "Long run",
+      "detail": "Slow and steady \u2014 walk breaks welcome",
+      "logged": []
     }
   ],
   "recent_activities": [
