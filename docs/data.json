@@ -1,21 +1,21 @@
 {
-  "generated_at": "2026-06-10 13:17",
+  "generated_at": "2026-06-11 18:10",
   "goal": "BBBRUN26 Half Marathon",
   "distance_km": 21.1,
   "target": "Complete",
   "race_date": "2026-10-25",
   "start_date": "2026-06-08",
-  "days_to_race": 137,
+  "days_to_race": 136,
   "current_week": 1,
   "total_weeks": 20,
   "summary": {
-    "total_km_run": 6.7,
+    "total_km_run": 15.0,
     "longest_run_km": 3.8,
-    "num_runs": 2,
-    "num_activities": 4,
+    "num_runs": 5,
+    "num_activities": 7,
     "this_week_target": 8,
     "this_week_run_km": 3.8,
-    "this_week_sessions": 2
+    "this_week_sessions": 5
   },
   "weeks": [
     {
@@ -25,7 +25,7 @@
       "end": "2026-06-14",
       "target_total": 8,
       "target_long": 3,
-      "actual_total": 3.8,
+      "actual_total": 12.1,
       "actual_long": 3.8,
       "state": "current"
     },
@@ -277,17 +277,36 @@
     {
       "day": "Wednesday",
       "date": "2026-06-10",
-      "is_today": true,
-      "is_past": false,
+      "is_today": false,
+      "is_past": true,
       "type": "strength",
       "label": "Strength A",
       "detail": "Band activation 10 min \u00b7 KB swings 3\u00d715 \u00b7 goblet squat 3\u00d710",
-      "logged": []
+      "logged": [
+        {
+          "type": "walk",
+          "distance_km": 2.57,
+          "duration_min": 42.6,
+          "avg_hr": 110
+        },
+        {
+          "type": "walk",
+          "distance_km": 2.85,
+          "duration_min": 38.5,
+          "avg_hr": 122
+        },
+        {
+          "type": "walk",
+          "distance_km": 2.88,
+          "duration_min": 40.7,
+          "avg_hr": 122
+        }
+      ]
     },
     {
       "day": "Thursday",
       "date": "2026-06-11",
-      "is_today": false,
+      "is_today": true,
       "is_past": false,
       "type": "run-quality",
       "label": "Quality run",
@@ -326,6 +345,36 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-06-10",
+      "type": "walk",
+      "distance_km": 2.88,
+      "duration_min": 40.7,
+      "pace": "14:08",
+      "avg_hr": 122,
+      "max_hr": 139,
+      "calories": null
+    },
+    {
+      "date": "2026-06-10",
+      "type": "walk",
+      "distance_km": 2.85,
+      "duration_min": 38.5,
+      "pace": "13:29",
+      "avg_hr": 122,
+      "max_hr": 143,
+      "calories": null
+    },
+    {
+      "date": "2026-06-10",
+      "type": "walk",
+      "distance_km": 2.57,
+      "duration_min": 42.6,
+      "pace": "16:33",
+      "avg_hr": 110,
+      "max_hr": 125,
+      "calories": null
+    },
     {
       "date": "2026-06-09",
       "type": "run",
@@ -369,6 +418,16 @@
   ],
   "recovery": [
     {
+      "date": "2026-06-11",
+      "steps": 180,
+      "sleep_h": null
+    },
+    {
+      "date": "2026-06-10",
+      "steps": 31016,
+      "sleep_h": 3.3
+    },
+    {
       "date": "2026-06-09",
       "steps": 10906,
       "sleep_h": null
@@ -385,7 +444,7 @@
       "date": "2026-09-13",
       "distance_km": 10,
       "type": "tune-up",
-      "days_to_event": 95,
+      "days_to_event": 94,
       "plan_week": 14
     },
     {
@@ -393,7 +452,7 @@
       "date": "2026-10-25",
       "distance_km": 21.1,
       "type": "goal",
-      "days_to_event": 137,
+      "days_to_event": 136,
       "plan_week": 20
     }
   ],
@@ -402,15 +461,15 @@
     "date": "2026-09-13",
     "distance_km": 10,
     "type": "tune-up",
-    "days_to_event": 95,
+    "days_to_event": 94,
     "plan_week": 14
   },
   "data_status": {
-    "exercise_sessions": 4,
-    "steps_records": 105,
-    "distance_records": 2,
-    "heart_rate_records": 46,
-    "sleep_sessions": 0,
+    "exercise_sessions": 7,
+    "steps_records": 241,
+    "distance_records": 5,
+    "heart_rate_records": 89,
+    "sleep_sessions": 1,
     "weight_records": 0
   }
 }
