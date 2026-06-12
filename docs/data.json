@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-11 18:10",
+  "generated_at": "2026-06-13 08:02",
   "goal": "BBBRUN26 Half Marathon",
   "distance_km": 21.1,
   "target": "Complete",
   "race_date": "2026-10-25",
   "start_date": "2026-06-08",
-  "days_to_race": 136,
+  "days_to_race": 134,
   "current_week": 1,
   "total_weeks": 20,
   "summary": {
@@ -306,8 +306,8 @@
     {
       "day": "Thursday",
       "date": "2026-06-11",
-      "is_today": true,
-      "is_past": false,
+      "is_today": false,
+      "is_past": true,
       "type": "run-quality",
       "label": "Quality run",
       "detail": "This week's interval or tempo session",
@@ -317,7 +317,7 @@
       "day": "Friday",
       "date": "2026-06-12",
       "is_today": false,
-      "is_past": false,
+      "is_past": true,
       "type": "cross",
       "label": "Cross trainer",
       "detail": "30 min aerobic at easy effort \u2014 active recovery",
@@ -326,7 +326,7 @@
     {
       "day": "Saturday",
       "date": "2026-06-13",
-      "is_today": false,
+      "is_today": true,
       "is_past": false,
       "type": "strength",
       "label": "Strength B",
@@ -418,8 +418,13 @@
   ],
   "recovery": [
     {
+      "date": "2026-06-12",
+      "steps": 332,
+      "sleep_h": null
+    },
+    {
       "date": "2026-06-11",
-      "steps": 180,
+      "steps": 6962,
       "sleep_h": null
     },
     {
@@ -444,7 +449,7 @@
       "date": "2026-09-13",
       "distance_km": 10,
       "type": "tune-up",
-      "days_to_event": 94,
+      "days_to_event": 92,
       "plan_week": 14
     },
     {
@@ -452,7 +457,7 @@
       "date": "2026-10-25",
       "distance_km": 21.1,
       "type": "goal",
-      "days_to_event": 136,
+      "days_to_event": 134,
       "plan_week": 20
     }
   ],
@@ -461,12 +466,12 @@
     "date": "2026-09-13",
     "distance_km": 10,
     "type": "tune-up",
-    "days_to_event": 94,
+    "days_to_event": 92,
     "plan_week": 14
   },
   "data_status": {
     "exercise_sessions": 7,
-    "steps_records": 241,
+    "steps_records": 303,
     "distance_records": 5,
     "heart_rate_records": 89,
     "sleep_sessions": 1,
