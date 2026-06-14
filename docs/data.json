@@ -1,21 +1,21 @@
 {
-  "generated_at": "2026-06-13 08:07",
+  "generated_at": "2026-06-14 19:20",
   "goal": "BBBRUN26 Half Marathon",
   "distance_km": 21.1,
   "target": "Complete",
   "race_date": "2026-10-25",
   "start_date": "2026-06-08",
-  "days_to_race": 134,
+  "days_to_race": 133,
   "current_week": 1,
   "total_weeks": 20,
   "summary": {
-    "total_km_run": 15.0,
+    "total_km_run": 19.1,
     "longest_run_km": 3.8,
-    "num_runs": 5,
-    "num_activities": 7,
+    "num_runs": 8,
+    "num_activities": 10,
     "this_week_target": 8,
-    "this_week_run_km": 3.8,
-    "this_week_sessions": 5
+    "this_week_run_km": 6.8,
+    "this_week_sessions": 8
   },
   "weeks": [
     {
@@ -25,7 +25,7 @@
       "end": "2026-06-14",
       "target_total": 8,
       "target_long": 3,
-      "actual_total": 12.1,
+      "actual_total": 16.1,
       "actual_long": 3.8,
       "state": "current"
     },
@@ -321,22 +321,42 @@
       "type": "cross",
       "label": "Cross trainer",
       "detail": "30 min aerobic at easy effort \u2014 active recovery",
-      "logged": []
+      "logged": [
+        {
+          "type": "run",
+          "distance_km": 3.01,
+          "duration_min": 20.2,
+          "avg_hr": 164
+        },
+        {
+          "type": "walk",
+          "distance_km": 0.35,
+          "duration_min": 4.2,
+          "avg_hr": 138
+        }
+      ]
     },
     {
       "day": "Saturday",
       "date": "2026-06-13",
-      "is_today": true,
-      "is_past": false,
+      "is_today": false,
+      "is_past": true,
       "type": "strength",
       "label": "Strength B",
       "detail": "Reverse lunge 3\u00d710 \u00b7 step-ups 3\u00d710 \u00b7 DB row 3\u00d712",
-      "logged": []
+      "logged": [
+        {
+          "type": "walk",
+          "distance_km": 0.74,
+          "duration_min": 103.8,
+          "avg_hr": 94
+        }
+      ]
     },
     {
       "day": "Sunday",
       "date": "2026-06-14",
-      "is_today": false,
+      "is_today": true,
       "is_past": false,
       "type": "run-long",
       "label": "Long run",
@@ -345,6 +365,36 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-06-13",
+      "type": "walk",
+      "distance_km": 0.74,
+      "duration_min": 103.8,
+      "pace": "140:12",
+      "avg_hr": 94,
+      "max_hr": 113,
+      "calories": null
+    },
+    {
+      "date": "2026-06-12",
+      "type": "walk",
+      "distance_km": 0.35,
+      "duration_min": 4.2,
+      "pace": "12:00",
+      "avg_hr": 138,
+      "max_hr": 162,
+      "calories": null
+    },
+    {
+      "date": "2026-06-12",
+      "type": "run",
+      "distance_km": 3.01,
+      "duration_min": 20.2,
+      "pace": "6:42",
+      "avg_hr": 164,
+      "max_hr": 181,
+      "calories": null
+    },
     {
       "date": "2026-06-10",
       "type": "walk",
@@ -418,9 +468,19 @@
   ],
   "recovery": [
     {
-      "date": "2026-06-12",
-      "steps": 332,
+      "date": "2026-06-14",
+      "steps": 12,
       "sleep_h": null
+    },
+    {
+      "date": "2026-06-13",
+      "steps": 10077,
+      "sleep_h": null
+    },
+    {
+      "date": "2026-06-12",
+      "steps": 7978,
+      "sleep_h": 2.5
     },
     {
       "date": "2026-06-11",
@@ -449,7 +509,7 @@
       "date": "2026-09-13",
       "distance_km": 10,
       "type": "tune-up",
-      "days_to_event": 92,
+      "days_to_event": 91,
       "plan_week": 14
     },
     {
@@ -457,7 +517,7 @@
       "date": "2026-10-25",
       "distance_km": 21.1,
       "type": "goal",
-      "days_to_event": 134,
+      "days_to_event": 133,
       "plan_week": 20
     }
   ],
@@ -466,15 +526,15 @@
     "date": "2026-09-13",
     "distance_km": 10,
     "type": "tune-up",
-    "days_to_event": 92,
+    "days_to_event": 91,
     "plan_week": 14
   },
   "data_status": {
-    "exercise_sessions": 7,
-    "steps_records": 303,
-    "distance_records": 5,
-    "heart_rate_records": 89,
-    "sleep_sessions": 1,
-    "weight_records": 0
+    "exercise_sessions": 10,
+    "steps_records": 463,
+    "distance_records": 8,
+    "heart_rate_records": 146,
+    "sleep_sessions": 2,
+    "weight_records": 2
   }
 }
